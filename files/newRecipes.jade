@@ -1,0 +1,29 @@
+doctype html
+html
+    head
+        title New recipes
+    body
+        a(href="/myProfile"): button(type="button") #{name}
+        br
+        a(href="/newRecipes"): button(type="button") New Recipes
+        br
+        a(href="/myRecipes"): button(type="button") My Recipes
+        br
+        br
+        h2 newRecipes
+        br
+        table(border='1')
+            tr
+                th Name
+                th Image
+                th Ingredient
+                th Go to
+
+            - for (let i=0; i<items.length; i++) {
+                tr
+                    td #{items[i].name}
+                    td
+                    td #{items[i].ingredient}
+                    td
+                        a(href='/recipe?id='.concat(i)): button(type="button") Go to
+            - }
