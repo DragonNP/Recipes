@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        title My Profile
+    body
+        h1 #{name}
+        label email:  #{email}
+        br
+        label password:  #{password}
+        br
+        br
+        a(href="/logout"): button(type="button") Log out
+        br
+        a(href="/"): button(type="button") Home

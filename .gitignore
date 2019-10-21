@@ -36,7 +36,7 @@ build/Release
 node_modules/
 jspm_packages/
 
-# TypeScript v1 declaration files
+# TypeScript v1 declaration views
 typings/
 
 # Optional npm cache directory
@@ -51,10 +51,10 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
+# Yarn Integrity views
 .yarn-integrity
 
-# dotenv environment variables file
+# dotenv environment variables views
 .env
 
 # next.js build output

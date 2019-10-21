@@ -1,0 +1,22 @@
+doctype html
+html
+    head
+        title Sing in
+        meta(charset="utf-8")
+    body
+        h1 Sing in
+        form(action='/login', method='post')
+            label Email
+            br
+            input(type='text', name='email')
+            br
+            br
+            label Password
+            br
+            input(type='password', name='password')
+            br
+            br
+            input(type='submit', value='Sing in')
+            br
+            br
+            a(href='/register'): button(type="button") Or you not have account?

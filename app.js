@@ -3,17 +3,19 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require("body-parser");
 const homeRouter = require('./routes/homeRouter');
 const recipesRouter = require('./routes/recipesRouter');
-const profileRouter = require('./routes/profileRouter');
+
+const account = require('./account');
 
 const app = express();
-app.set('views', __dirname + '/files');
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
+app.set('views', './views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+app.use(account.profile);
+app.use(account.userRouter);
 app.use("/", homeRouter);
 app.use("/", recipesRouter);
-app.use("/", profileRouter);
 
 app.listen(3001, function () {
    console.log('server is running');
