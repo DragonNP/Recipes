@@ -1,13 +1,20 @@
-const path = require('path');
-const pug = require('pug');
-const user = require('../../models/user');
+const utilities = require('../../utilities');
+const user = require('../models/user');
 
 exports.addUser = function(request, response) {
-    sendPugFile('register', request, response);
+    utilities.sendPugFile(
+        __dirname,
+        'register',
+        request,
+        response);
 };
 
 exports.loginUser = function(request, response) {
-    sendPugFile('login', request, response);
+    utilities.sendPugFile(
+        __dirname,
+        'login',
+        request,
+        response);
 };
 
 exports.postAddUser = function(request, response) {
@@ -21,7 +28,10 @@ exports.postAddUser = function(request, response) {
         request.body.password);
 
     if (current_user !== undefined)
-        return sendPugFile('error', request, response,
+        return utilities.sendPugFile(
+            __dirname,
+            'error',
+            request, response,
             {
                 smg: current_user,
                 path: '/register'
@@ -36,7 +46,11 @@ exports.postLoginUser = function(request, response) {
 
     if (current_user === undefined ||
         current_user.password !== request.body.password)
-        return sendPugFile('error', request, response,
+        return utilities.sendPugFile(
+            __dirname,
+            'error',
+            request,
+            response,
             {
                 smg: 'Email or Password is invalid',
                 path: '/login'
@@ -50,29 +64,3 @@ exports.logout = function(request, response) {
     response.clearCookie('id');
     response.redirect('/')
 };
-
-function sendPugFile(filename, request, response, options) {
-    if (typeof options === 'undefined') {
-        pug.renderFile(
-            path.join(__dirname, '..\\views\\', filename + '.pug'),
-            {},
-            function (err, data) {
-                if (err !== null) {
-                    response.sendStatus(500);
-                    return console.log(err);
-                } else
-                    return response.send(data)
-            })
-    }
-
-    pug.renderFile(
-        path.join(__dirname, '..\\views\\', filename + '.pug'),
-        options,
-        function (err, data) {
-            if (err !== null) {
-                response.sendStatus(500);
-                return console.log(err);
-            } else
-                return response.send(data)
-        })
-}
