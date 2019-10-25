@@ -5,5 +5,5 @@ const user = require('./models/user');
 exports.profile = profileRouter;
 exports.user = userRouter;
 exports.getUser = function () {
-    return user
+    return user.getUsers()
 };

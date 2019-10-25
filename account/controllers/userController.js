@@ -1,6 +1,7 @@
 const utilities = require('../../utilities');
 const user = require('../models/user');
 
+// Func addUser, get /register
 exports.addUser = function(request, response) {
     utilities.sendPugFile(
         __dirname,
@@ -9,14 +10,7 @@ exports.addUser = function(request, response) {
         response);
 };
 
-exports.loginUser = function(request, response) {
-    utilities.sendPugFile(
-        __dirname,
-        'login',
-        request,
-        response);
-};
-
+// Func postAddUser, post /register
 exports.postAddUser = function(request, response) {
     if (!request.body) return response.sendStatus(400);
     if (request.body.passsword === '')
@@ -41,6 +35,16 @@ exports.postAddUser = function(request, response) {
         .redirect('/');
 };
 
+// Func loginUser, get /login
+exports.loginUser = function(request, response) {
+    utilities.sendPugFile(
+        __dirname,
+        'login',
+        request,
+        response);
+};
+
+// Func postLoginUser, post /login
 exports.postLoginUser = function(request, response) {
     const current_user = user.getUsers().find(o => o.email === request.body.email);
 
@@ -60,6 +64,7 @@ exports.postLoginUser = function(request, response) {
     response.redirect('/')
 };
 
+// Func logout, get /logout
 exports.logout = function(request, response) {
     response.clearCookie('id');
     response.redirect('/')

@@ -1,0 +1,28 @@
+doctype html
+html
+    head
+        title Recipe: #{item.name}
+    body
+        a(href="/myProfile"): button(type="button") #{name}
+        br
+        a(href="/newRecipes"): button(type="button") New Recipes
+        br
+        a(href="/myRecipes"): button(type="button") My Recipes
+        br
+        br
+        h2 Recipe: #{item.name}
+        table(border='1')
+            tr
+                th Image
+                th Name
+                th Description
+                th Ingredients
+                th Instruction
+                th Date
+            tr
+                td #{item.path_img}
+                td #{item.name}
+                td #{item.description}
+                td #{item.ingredients}
+                td #{item.instruction}
+                td #{item.date}

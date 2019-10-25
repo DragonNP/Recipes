@@ -1,0 +1,37 @@
+doctype html
+html
+    head
+        title Add Recipe
+        meta(charset='utf-8')
+    body
+        h1 Add Recipe
+        form(action="/addRecipe", method="post")
+            label Name
+            br
+            input(type="text" name="name")
+            br
+            br
+            label Description
+            br
+            input(type="text" name="description")
+            br
+            br
+            label Ingredients
+            br
+            input(type="text" name="ingredients")
+            br
+            br
+            label Instruction
+            br
+            input(type="text" name="instruction")
+            br
+            br
+            label Image path
+            br
+            input(type="text" name="path_img")
+            br
+            br
+            input(type="submit" value="Add Recipe")
+            br
+            br
+            a(href='/'): button(type="button") Home
