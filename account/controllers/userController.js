@@ -7,7 +7,10 @@ exports.addUser = function(request, response) {
         __dirname,
         'register',
         request,
-        response);
+        response,
+        {
+            title: 'Register'
+        });
 };
 
 // Func postAddUser, post /register
@@ -28,6 +31,7 @@ exports.postAddUser = function(request, response) {
             request, response,
             {
                 smg: current_user,
+                name_bt: 'back',
                 path: '/register'
             });
 
@@ -41,7 +45,10 @@ exports.loginUser = function(request, response) {
         __dirname,
         'login',
         request,
-        response);
+        response,
+        {
+            title: 'Login'
+        });
 };
 
 // Func postLoginUser, post /login
@@ -57,6 +64,7 @@ exports.postLoginUser = function(request, response) {
             response,
             {
                 smg: 'Email or Password is invalid',
+                name_bt: 'Back',
                 path: '/login'
             });
 
@@ -68,4 +76,22 @@ exports.postLoginUser = function(request, response) {
 exports.logout = function(request, response) {
     response.clearCookie('id');
     response.redirect('/')
+};
+
+exports.auth = function(request, response, next) {
+    const current_user = user.getUsers().find(o => o.id === request.cookies.id);
+
+    if (current_user !== undefined) return next();
+    return utilities.sendPugFile(
+        __dirname,
+        'error_auth',
+        request,
+        response,
+        {
+            smg: 'You are not login',
+            name_bt: 'login',
+            name_bt2: 'register',
+            path: 'login',
+            path2: 'register'
+        });
 };

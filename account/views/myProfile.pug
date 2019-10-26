@@ -1,14 +1,13 @@
-doctype html
-html
-    head
-        title My Profile
-    body
-        h1 #{name}
-        label email:  #{email}
-        br
-        label password:  #{password}
-        br
-        br
-        a(href="/logout"): button(type="button") Log out
-        br
-        a(href="/"): button(type="button") Home
+extends layouts/default_layout
+
+block content
+    label #{name}
+    br
+    label email:  #{email}
+    br
+    label password:  #{password}
+    br
+    br
+    a(href="/logout"): button(type="button") Log out
+    br
+    a(href="/"): button(type="button") Home

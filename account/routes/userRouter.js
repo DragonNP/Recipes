@@ -16,4 +16,7 @@ userRouter.post("/login", userController.postLoginUser);
 // Route get /logout
 userRouter.get("/logout", userController.logout);
 
+// other route
+userRouter.use(userController.auth);
+
 module.exports = userRouter;

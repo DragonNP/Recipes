@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        title #{title}
+    body
+        a(href="/myProfile"): button(type="button") #{name}
+        br
+        a(href="/newRecipes"): button(type="button") New Recipes
+        br
+        a(href="/myRecipes"): button(type="button") My Recipes
+        br
+        br
+        h2 #{title}
+        block content

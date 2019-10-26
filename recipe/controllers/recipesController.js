@@ -6,24 +6,13 @@ const utilities = require('../../utilities');
 exports.newRecipes = function (request, response) {
     const current_user = account.getUser().find(o => o.id === request.cookies.id);
 
-    if (current_user === undefined)
-        return utilities.sendPugFile(
-            __dirname,
-            'error',
-            request,
-            response,
-            {
-                smg: 'You are not login',
-                path1: 'login',
-                path2: 'register'
-            });
-
     utilities.sendPugFile(
         __dirname,
         'newRecipes',
         request,
         response,
         {
+            title: 'new Recipes',
             name: current_user.name,
             items: recipe.getRecipes()
         });
@@ -33,24 +22,13 @@ exports.newRecipes = function (request, response) {
 exports.myRecipes = function (request, response) {
     const current_user = account.getUser().find(o => o.id === request.cookies.id);
 
-    if (current_user === undefined)
-        return utilities.sendPugFile(
-            __dirname,
-            'error',
-            request,
-            response,
-            {
-            smg: 'You are not login',
-            path1: 'login',
-            path2: 'register'
-        });
-
     utilities.sendPugFile(
         __dirname,
         'myRecipes',
         request,
         response,
         {
+            title: 'My Recipes',
             name: current_user.name,
             items: recipe.getRecipes().filter(function (value) {
                 return value.account_id === request.cookies.id;
@@ -59,29 +37,18 @@ exports.myRecipes = function (request, response) {
 };
 
 // Func recipe, get /recipe
-exports.recipe = function (request, response){
+exports.recipe = function (request, response) {
     const current_user = account.getUser().find(o => o.id === request.cookies.id);
-
-    if (current_user === undefined)
-        return utilities.sendPugFile(
-            __dirname,
-            'error',
-            request,
-            response,
-            {
-                smg: 'You are not login',
-                path1: 'login',
-                path2: 'register'
-            });
-
+    const item = recipe.getRecipes().find(o => o.recipe_id === request.query.id);
     utilities.sendPugFile(
         __dirname,
         'recipe',
         request,
         response,
         {
+            title: `Recipe:${item.name}`,
             name: current_user.name,
-            item: recipe.getRecipes().find(o => o.recipe_id === request.query.id)
+            item: item
         })
 };
 
@@ -89,24 +56,13 @@ exports.recipe = function (request, response){
 exports.addRecipe = function (request, response) {
     const current_user = account.getUser().find(o => o.id === request.cookies.id);
 
-    if (current_user === undefined)
-        return utilities.sendPugFile(
-            __dirname,
-            'error',
-            request,
-            response,
-            {
-                smg: 'You are not login',
-                path1: 'login',
-                path2: 'register'
-            });
-
     utilities.sendPugFile(
         __dirname,
         'addRecipe',
         request,
         response,
         {
+            title: 'Add Recipe',
             name: current_user.name
         })
 };
@@ -122,7 +78,7 @@ exports.postAddRecipe = function (request, response) {
         request.body.instruction,
         new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
         request.cookies.id,
-        function(err, date){
+        function(err){
             if(!err) return;
             return utilities.sendPugFile(
                 __dirname,
@@ -135,4 +91,8 @@ exports.postAddRecipe = function (request, response) {
         });
 
     response.redirect('/');
+};
+
+exports.editRecipe = function (request, response) {
+    response.send('in developing');
 };
