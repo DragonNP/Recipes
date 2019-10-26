@@ -1,0 +1,34 @@
+extends layouts/default_layout
+
+block content
+    form(action="/editRecipe", method="post")
+        label Name
+        br
+        input(type="text" name="name" value=item.name)
+        br
+        br
+        label Description
+        br
+        input(type="text" name="description" value=item.description)
+        br
+        br
+        label Ingredients
+        br
+        input(type="text" name="ingredients" value=item.ingredients)
+        br
+        br
+        label Instruction
+        br
+        input(type="text" name="instruction" value=item.instruction)
+        br
+        br
+        label Image path
+        br
+        input(type="text" name="path_img" value=item.path_img)
+        br
+        br
+        input(type='hidden', name='recipe_id', value=item.recipe_id)
+        input(type="submit" value="Edit Recipe")
+        br
+        br
+        a(href='/'): button(type="button") Home

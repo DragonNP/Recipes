@@ -40,15 +40,18 @@ exports.myRecipes = function (request, response) {
 exports.recipe = function (request, response) {
     const current_user = account.getUser().find(o => o.id === request.cookies.id);
     const item = recipe.getRecipes().find(o => o.recipe_id === request.query.id);
+
     utilities.sendPugFile(
         __dirname,
         'recipe',
         request,
         response,
         {
-            title: `Recipe:${item.name}`,
+            title: `Recipe: ${item.name}`,
             name: current_user.name,
-            item: item
+            item: item,
+            name_bt: item.account_id === request.cookies.id ? 'Edit' : 'Add favorite',
+            path_bt: item.account_id === request.cookies.id ? `/editRecipe?id=${item.recipe_id}` : `/addFavorite?id=${item.recipe_id}`
         })
 };
 
@@ -93,6 +96,42 @@ exports.postAddRecipe = function (request, response) {
     response.redirect('/');
 };
 
+// Func editRecipe, get /editRecipe
 exports.editRecipe = function (request, response) {
+    const current_user = account.getUser().find(o => o.id === request.cookies.id);
+    const item = recipe.getRecipes().find(o => o.recipe_id === request.query.id);
+
+    if(item.account_id !== request.cookies.id)
+        return response.redirect('/');
+
+    utilities.sendPugFile(
+        __dirname,
+        'editRecipe',
+        request,
+        response,
+        {
+            title: `Edit recipe: ${item.name}`,
+            name: current_user.name,
+            item: item
+        })
+};
+// Func postEditRecipe, post /editRecipe
+exports.postEditRecipe = function (request, response) {
+    const item = recipe.getRecipes().find(o => o.recipe_id === request.body.recipe_id);
+
+    item.path_img = request.body.path_img;
+    item.name = request.body.name;
+    item.description = request.body.description;
+    item.ingredients = request.body.ingredients;
+    item.instruction = request.body.instruction;
+    item.date = new Date()
+                    .toISOString()
+                    .replace(/T/, ' ')
+                    .replace(/\..+/, '');
+
+    response.redirect('/');
+};
+//Func deleteItem, get /deleteItem
+exports.deleteRecipe = function (request, response) {
     response.send('in developing');
 };

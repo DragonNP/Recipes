@@ -17,4 +17,11 @@ recipesRouter.get("/addRecipe", recipesController.addRecipe);
 // Route post /addRecipe
 recipesRouter.post("/addRecipe", recipesController.postAddRecipe);
 
+// Route get /editRecipe
+recipesRouter.get("/editRecipe", recipesController.editRecipe);
+// Route post /editRecipe
+recipesRouter.post("/editRecipe", recipesController.postEditRecipe);
+// Route get /deleteRecipe
+recipesRouter.post("/deleteRecipe", recipesController.deleteRecipe);
+
 module.exports = recipesRouter;
