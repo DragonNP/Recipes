@@ -1,4 +1,5 @@
 request = require('request-json');
+const log = require('../logger');
 
 let client;
 const recipes_path = {
@@ -26,30 +27,36 @@ module.exports = {
 };
 
 function init(uri) {
+    log.info('api initiating');
     client = request.createClient(uri);
 }
 
 function addRecipe(json, fn) {
     if (!client) return fn('client not init');
+    log.info('api: called addRecipe method');
     client.post(recipes_path.add, json, fn);
 }
 
 function addFavourites(json, fn) {
     if (!client) return fn('client not init');
+    log.info('api: called addFavourites method');
     client.post(recipes_path.addFavourites, json, fn);
 }
 
 function getRecipes(fn) {
     if (!client) return fn('client not init');
+    log.info('api: called getRecipes method');
     client.get(recipes_path.recipes, {}, fn);
 }
 
 function getRecipe(json, fn) {
     if (!client) return fn('client not init');
+    log.info('api: called getRecipe method');
     client.get(recipes_path.recipes, json, fn);
 }
 
 function deleteRecipe(json, fn) {
     if (!client) return fn('client not init');
+    log.info('api: called deleteRecipe method');
     client.delete(recipes_path.recipes, json, fn);
 }

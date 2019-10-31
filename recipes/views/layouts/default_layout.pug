@@ -1,0 +1,11 @@
+doctype html
+html
+    head
+        title #{title}
+        meta(charset='utf-8')
+    body
+        a(href='/myProfile'): button(type="button") #{myProfile}
+        a(href='/newRecipes'): button(type="button") #{newRecipes}
+        a(href='/myRecipes'): button(type="button") #{myRecipes}
+        block content
+        block footer

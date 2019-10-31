@@ -1,25 +1,23 @@
-doctype html
+extends layouts/default_layout
+block content
+    - let items = recipes || ''
 
-- let items = recipes || ''
+    table
+        caption
+            h1 #{title}
+        tr
+            th Image
+            th Name
+            th Description
+            th Ingredients
+        tr
+            - for (let i = 0; i < items.length; i++)
+                td #{items[i].path_img}
+                td #{items[i].name}
+                td #{items[i].description}
+                td #{items[i].ingredients}
+                td
+                    a(href='/recipe?id='.concat(items[i]._id)): button(type="button") Go To
 
-html
-    head
-        title #{title}
-        meta(charset='utf-8')
-    body
-        table
-            caption
-                h1 #{title}
-            tr
-                th Image
-                th Name
-                th Description
-                th Ingredients
-            tr
-                - for (let i = 0; i < items.length; i++)
-                    td #{items[i].path_img}
-                    td #{items[i].name}
-                    td #{items[i].description}
-                    td #{items[i].ingredients}
-                    td
-                        a(href='/recipe?id='.concat(items[i]._id)): button(type="button") Go To
+block footer
+    label © 2019 DragonNP

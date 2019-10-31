@@ -1,14 +1,10 @@
 const express = require('express');
-const recipes = require('./recipes');
-const api = require('./api');
 const utilities = require('./utilities');
-
-api.init('https://recipes-api-dragonnp.herokuapp.com/');
+const log = require('./logger');
 
 const app = express();
-app.set('view engine', 'pug');
+utilities.initProject(app);
 
-app.use(utilities);
-app.use(recipes);
-
-app.listen(8080);
+app.listen(process.env.PORT || 8080, () => {
+    log.info('website is running')
+});
