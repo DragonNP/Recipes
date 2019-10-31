@@ -22,7 +22,7 @@ function initProject(app) {
             options = options || {};
 
             pug.renderFile(
-                path.join(dirname, '..\\views\\', filename + '.pug'),
+                path.join(dirname, '../views/', filename + '.pug'),
                 options,
                 function (err, data) {
                     if (err !== null) {
