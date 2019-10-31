@@ -2,29 +2,28 @@
   "name": "recipes",
   "version": "1.0.0",
   "description": "Site for you recipes",
-  "main": "app.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "recipes",
+    "dragonnp",
+    "site",
+    "express"
+  ],
+  "author": "DragonNP",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "latest",
-    "cookie-parser": "^1.4.4",
-    "express": "^4.17.1",
-    "jade": "^1.11.0",
-    "pug": "^2.0.4"
+    "express": "latest",
+    "pug": "^2.0.4",
+    "request-json": "latest"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DragonNP/Recipes.git"
   },
-  "keywords": [
-    "site",
-    "recipes",
-    "DragonNP"
-  ],
-  "author": "DragonNP",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/DragonNP/Recipes/issues"
   },
