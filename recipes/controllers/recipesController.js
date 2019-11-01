@@ -25,5 +25,4 @@ function newRecipes(request, response, next) {
 }
 
 function myRecipes(request, response, next) {
-
 }
