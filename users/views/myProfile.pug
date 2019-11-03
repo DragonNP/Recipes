@@ -1,0 +1,12 @@
+extends layouts/default_layout
+
+block content
+    h1 #{title}
+    h2 #{myPersonalProfile}
+    label #{username}
+    br
+    label #{firstName} #{lastName}
+    br
+    label #{email}
+    br
+    a(href='/logout'): button(type="button") #{logout}

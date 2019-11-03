@@ -8,12 +8,14 @@ function auth(request, response, next) {
     log.info('authorizationController: called auth method');
 
     const cookies = request.cookies;
+    const url = request.url;
 
-    if (request.url === '/registration' ||
-        request.url === '/login' ||
-        request.url === '/newRecipes')
+    if (cookies.token |
+        cookies.token !== undefined ||
+        url === '/registration' ||
+        url === '/login' ||
+        url === '/newRecipes')
         return next();
-    if(cookies.token) return next();
 
     response.sendPugFile(__dirname, 'error',
         {
@@ -24,6 +26,7 @@ function auth(request, response, next) {
             error: request.getText('You are not authorized'),
             path1: request.getText('/registration'),
             nameBt1: request.getText('Sign Up'),
+            isVisitableTwoBt: true,
             path2: request.getText('/login'),
             nameBt2: request.getText('Sign In')
         });

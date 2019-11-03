@@ -1,62 +1,164 @@
-request = require('request-json');
+const rp = require('');
 const log = require('../logger');
 
-let client;
-const recipes_path = {
-    add: 'recipes/add/',
-    addFavourites: 'recipes/addFavourites/',
-    recipes: 'recipes/',
-    recipe: 'recipes/',
-    delRecipe: 'recipes/'
+const uri = 'https://recipes-api-dragonnp.herokuapp.com';
+const url_recipes = {
+    add: `${uri}/recipes/add/`,
+    addFavourites: `${uri}/recipes/addFavourites/`,
+    recipes: `${uri}/recipes/`,
+    delRecipe: `${uri}/recipes/`
 };
-const users_path = {
-    add: 'users/registration/',
-    authenticate: 'users/authenticate',
-    update: 'users/update/',
-    myProfile: 'users/myProfile/',
-    users: 'users/'
+const url_users = {
+    registration: `${uri}/users/registration/`,
+    authenticate: `${uri}/users/authenticate`,
+    update: `${uri}/users/update/`,
+    myProfile: `${uri}/users/myProfile/`,
+    users: `${uri}/users/`
 };
 
 module.exports = {
-    init,
-    addRecipe,
-    addFavourites,
+    // Recipes
     getRecipes,
     getRecipe,
-    deleteRecipe
+    addRecipe,
+    addFavourites,
+    deleteRecipe,
+
+    // Users
+    myProfile,
+    getUser,
+    updateUser,
+    addUser,
+    authenticateUser,
 };
 
-function init(uri) {
-    log.info('api initiating');
-    client = request.createClient(uri);
-}
-
-function addRecipe(json, fn) {
-    if (!client) return fn('client not init');
-    log.info('api: called addRecipe method');
-    client.post(recipes_path.add, json, fn);
-}
-
-function addFavourites(json, fn) {
-    if (!client) return fn('client not init');
-    log.info('api: called addFavourites method');
-    client.post(recipes_path.addFavourites, json, fn);
-}
-
+// Recipes
 function getRecipes(fn) {
-    if (!client) return fn('client not init');
     log.info('api: called getRecipes method');
-    client.get(recipes_path.recipes, {}, fn);
+
+    const options = {
+      method: 'GET',
+      url: url_recipes.recipes,
+      json: true
+    };
+
+    rp(options, fn);
 }
 
 function getRecipe(json, fn) {
-    if (!client) return fn('client not init');
     log.info('api: called getRecipe method');
-    client.get(recipes_path.recipes, json, fn);
+
+    const options = {
+        method: 'GET',
+        url: url_recipes.recipes,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function addRecipe(json, fn) {
+    log.info('api: called addRecipe method');
+
+    const options = {
+        method: 'POST',
+        url: url_recipes.add,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function addFavourites(json, fn) {
+    log.info('api: called addFavourites method');
+
+    const options = {
+        method: 'POST',
+        url: url_recipes.addFavourites,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
 }
 
 function deleteRecipe(json, fn) {
-    if (!client) return fn('client not init');
     log.info('api: called deleteRecipe method');
-    client.delete(recipes_path.recipes, json, fn);
+
+    const options = {
+        method: 'DELETE',
+        url: url_recipes.delRecipe,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+// Users
+function myProfile(json, fn) {
+    log.info('api: called myProfile method');
+
+    const options = {
+        method: 'GET',
+        url: url_users.myProfile,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function getUser(json, fn) {
+    log.info('api: called getUser method');
+
+    const options = {
+        method: 'GET',
+        url: url_users.users,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function updateUser(json, fn) {
+    log.info('api: called updateUser method');
+
+    const options = {
+        method: 'POST',
+        url: url_users.update,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function addUser(json, fn) {
+    log.info('api: called addUser method');
+
+    const options = {
+        method: 'POST',
+        url: url_users.add,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function authenticateUser(json, fn) {
+    log.info('api: called authenticateUser method');
+
+    const options = {
+        method: 'POST',
+        url: url_users.authenticate,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
 }

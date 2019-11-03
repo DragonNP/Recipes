@@ -7,8 +7,11 @@ const router = express.Router();
 router.use(authorizationController.auth);
 
 router.get('/registration', usersController.getRegistration);
-router.post('/registration', usersController.postRegistration);
 router.get('/login', usersController.getLogin);
+router.get('/myProfile', usersController.getMyProfile);
+router.get('/logout', usersController.logout);
+
+router.post('/registration', usersController.postRegistration);
 router.post('/login', usersController.postLogin);
 
 module.exports = router;

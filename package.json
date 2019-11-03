@@ -20,7 +20,8 @@
     "cookie-parser": "^1.4.4",
     "express": "latest",
     "pug": "^2.0.4",
-    "request-json": "latest"
+    "request": "^2.88.0",
+    "request-promise": "latest"
   },
   "devDependencies": {},
   "repository": {
