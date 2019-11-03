@@ -1,4 +1,4 @@
-const rp = require('');
+const rp = require('request-promise');
 const log = require('../logger');
 
 const uri = 'https://recipes-api-dragonnp.herokuapp.com';
@@ -19,6 +19,7 @@ const url_users = {
 module.exports = {
     // Recipes
     getRecipes,
+    getRecipesByID,
     getRecipe,
     addRecipe,
     addFavourites,
@@ -40,6 +41,19 @@ function getRecipes(fn) {
       method: 'GET',
       url: url_recipes.recipes,
       json: true
+    };
+
+    rp(options, fn);
+}
+
+function getRecipesByID(json, fn) {
+    log.info('api: called getRecipes method');
+
+    const options = {
+        method: 'GET',
+        url: url_recipes.recipes,
+        form: json,
+        json: true
     };
 
     rp(options, fn);

@@ -1,3 +1,4 @@
+const api = require('../../api');
 const log = require('../../logger');
 
 module.exports = {
@@ -10,8 +11,14 @@ function auth(request, response, next) {
     const cookies = request.cookies;
     const url = request.url;
 
+    if (cookies.token && !cookies.account_id)
+         return api.myProfile({token: cookies.token}, (err, res, body) => {
+            response.cookie('account_id', body._id).redirect('/');
+        });
+
     if (cookies.token |
         cookies.token !== undefined ||
+        url === '/' ||
         url === '/registration' ||
         url === '/login' ||
         url === '/newRecipes')

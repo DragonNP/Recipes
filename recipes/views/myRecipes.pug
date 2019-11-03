@@ -1,4 +1,5 @@
 extends layouts/default_layout
+
 block content
     - let items = recipes || ''
 
@@ -18,3 +19,5 @@ block content
                 td #{items[i].ingredients}
                 td
                     a(href='/recipe?id='.concat(items[i]._id)): button(type="button") #{goTo}
+
+    a(href='/addRecipe'): button(type="button") #{addRecipe}
