@@ -2,21 +2,17 @@ extends layouts/default_layout
 
 block content
     - let items = recipes || ''
-
+    h1 #{title}
     table
-        caption
-            h1 #{title}
         tr
             th #{image}
             th #{name}
             th #{description}
-            th #{ingredients}
         - for (let i = 0; i < items.length; i++)
             tr
                 td #{items[i].path_img}
                 td #{items[i].name}
                 td #{items[i].description}
-                td #{items[i].ingredients}
                 td
                     a(href='/recipe?id='.concat(items[i]._id)): button(type="button") #{goTo}
 

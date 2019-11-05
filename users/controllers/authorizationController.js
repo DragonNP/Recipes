@@ -12,7 +12,7 @@ function auth(request, response, next) {
     const url = request.url;
 
     if (cookies.token && !cookies.account_id)
-         return api.myProfile({token: cookies.token}, (err, res, body) => {
+         return api.getMyProfile(cookies.token, (err, res, body) => {
             response.cookie('account_id', body._id).redirect('/');
         });
 

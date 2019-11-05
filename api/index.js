@@ -3,37 +3,57 @@ const log = require('../logger');
 
 const uri = 'https://recipes-api-dragonnp.herokuapp.com';
 const url_recipes = {
-    add: `${uri}/recipes/add/`,
-    addFavourites: `${uri}/recipes/addFavourites/`,
-    recipes: `${uri}/recipes/`,
-    delRecipe: `${uri}/recipes/`
+    my: `${uri}/recipes/my`,
+    recipes: `${uri}/recipes/all`,
+    byId: `${uri}/recipes/byId`,
+    byAccountId: `${uri}/recipes/byAccountId`,
+    add: `${uri}/recipes/add`,
+    favourites: `${uri}/recipes/addFavourites`,
+    delRecipe: `${uri}/recipes`
 };
 const url_users = {
-    registration: `${uri}/users/registration/`,
+    registration: `${uri}/users/registration`,
     authenticate: `${uri}/users/authenticate`,
-    update: `${uri}/users/update/`,
-    myProfile: `${uri}/users/myProfile/`,
-    users: `${uri}/users/`
+    update: `${uri}/users/update`,
+    myProfile: `${uri}/users/myProfile`,
+    users: `${uri}/users`
 };
 
 module.exports = {
     // Recipes
+    getMyRecipes,
     getRecipes,
-    getRecipesByID,
-    getRecipe,
+    getRecipesById,
+    getRecipesByAccountId,
     addRecipe,
     addFavourites,
     deleteRecipe,
 
     // Users
-    myProfile,
-    getUser,
-    updateUser,
+    getMyProfile,
+    getUserById,
     addUser,
     authenticateUser,
+    updateUser,
 };
 
 // Recipes
+function getMyRecipes(token, fn) {
+    log.info('api: called getMyRecipes method');
+
+    const json = {
+        token: token
+    };
+    const options = {
+      method: 'GET',
+      url: url_recipes.my,
+      form: json,
+      json: true
+    };
+
+    rp(options, fn);
+}
+
 function getRecipes(fn) {
     log.info('api: called getRecipes method');
 
@@ -46,12 +66,15 @@ function getRecipes(fn) {
     rp(options, fn);
 }
 
-function getRecipesByID(json, fn) {
-    log.info('api: called getRecipes method');
+function getRecipesById(id, fn) {
+    log.info('api: called getRecipesById method');
 
+    const json = {
+        _id: id
+    };
     const options = {
         method: 'GET',
-        url: url_recipes.recipes,
+        url: url_recipes.byId,
         form: json,
         json: true
     };
@@ -59,12 +82,15 @@ function getRecipesByID(json, fn) {
     rp(options, fn);
 }
 
-function getRecipe(json, fn) {
-    log.info('api: called getRecipe method');
+function getRecipesByAccountId(id, fn) {
+    log.info('api: called getRecipesByAccountId method');
 
+    const json = {
+        account_id: id
+    };
     const options = {
         method: 'GET',
-        url: url_recipes.recipes,
+        url: url_recipes.byAccountId,
         form: json,
         json: true
     };
@@ -72,25 +98,29 @@ function getRecipe(json, fn) {
     rp(options, fn);
 }
 
-function addRecipe(json, fn) {
+function addRecipe(recipe, fn) {
     log.info('api: called addRecipe method');
 
     const options = {
         method: 'POST',
         url: url_recipes.add,
-        form: json,
+        form: recipe,
         json: true
     };
 
     rp(options, fn);
 }
 
-function addFavourites(json, fn) {
+function addFavourites(token, id, fn) {
     log.info('api: called addFavourites method');
 
+    const json = {
+        token: token,
+        id: id
+    };
     const options = {
         method: 'POST',
-        url: url_recipes.addFavourites,
+        url: url_recipes.favourites,
         form: json,
         json: true
     };
@@ -98,9 +128,13 @@ function addFavourites(json, fn) {
     rp(options, fn);
 }
 
-function deleteRecipe(json, fn) {
+function deleteRecipe(token, id, fn) {
     log.info('api: called deleteRecipe method');
 
+    const json = {
+        token: token,
+        id: id
+    };
     const options = {
         method: 'DELETE',
         url: url_recipes.delRecipe,
@@ -111,10 +145,14 @@ function deleteRecipe(json, fn) {
     rp(options, fn);
 }
 
-// Users
-function myProfile(json, fn) {
-    log.info('api: called myProfile method');
 
+// Users
+function getMyProfile(token, fn) {
+    log.info('api: called getMyProfile method');
+
+    const json = {
+        token: token
+    };
     const options = {
         method: 'GET',
         url: url_users.myProfile,
@@ -125,9 +163,13 @@ function myProfile(json, fn) {
     rp(options, fn);
 }
 
-function getUser(json, fn) {
-    log.info('api: called getUser method');
+function getUserById(token, id, fn) {
+    log.info('api: called getUserById method');
 
+    const json = {
+        token: token,
+        id: id
+    };
     const options = {
         method: 'GET',
         url: url_users.users,
@@ -138,25 +180,29 @@ function getUser(json, fn) {
     rp(options, fn);
 }
 
-function updateUser(json, fn) {
-    log.info('api: called updateUser method');
-
-    const options = {
-        method: 'POST',
-        url: url_users.update,
-        form: json,
-        json: true
-    };
-
-    rp(options, fn);
-}
-
-function addUser(json, fn) {
+function addUser(user, fn) {
     log.info('api: called addUser method');
 
     const options = {
         method: 'POST',
         url: url_users.add,
+        form: user,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function authenticateUser(email, password, fn) {
+    log.info('api: called authenticateUser method');
+
+    const json = {
+        email: email,
+        password: password
+    };
+    const options = {
+        method: 'POST',
+        url: url_users.authenticate,
         form: json,
         json: true
     };
@@ -164,12 +210,14 @@ function addUser(json, fn) {
     rp(options, fn);
 }
 
-function authenticateUser(json, fn) {
-    log.info('api: called authenticateUser method');
+function updateUser(token, updatedUser, fn) {
+    log.info('api: called updateUser method');
 
+    const json = updatedUser;
+    json.token = token;
     const options = {
         method: 'POST',
-        url: url_users.authenticate,
+        url: url_users.update,
         form: json,
         json: true
     };

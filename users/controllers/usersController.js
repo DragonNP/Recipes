@@ -12,6 +12,8 @@ module.exports = {
 };
 
 function getRegistration(request, response, next) {
+    log.info('userController: called getRegistration method');
+
     response.sendPugFile(__dirname, 'registration',
         {
             title: request.getText('Registration'),
@@ -29,6 +31,8 @@ function getRegistration(request, response, next) {
 }
 
 function getLogin(request, response, next) {
+    log.info('userController: called getLogin method');
+
     response.sendPugFile(__dirname, 'login', {
         title: request.getText('Login'),
         myProfile: request.getText('My Profile'),
@@ -42,12 +46,11 @@ function getLogin(request, response, next) {
 }
 
 function getMyProfile(request, response, next) {
-    const cookies = request.cookies;
-    const json = {
-        token: cookies.token
-    };
+    log.info('userController: called getMyProfile method');
 
-    api.myProfile(json, (err, res, body) => {
+    const cookies = request.cookies;
+
+    api.getMyProfile(cookies.token, (err, res, body) => {
         if(err) return next(err);
         if(body.message)
             return response.sendPugFile(__dirname, 'error', {
@@ -77,22 +80,27 @@ function getMyProfile(request, response, next) {
 }
 
 function logout(request, response, next) {
+    log.info('userController: called logout method');
+
     response.clearCookie('token')
         .redirect('/');
 }
 
+
 function postRegistration(request, response, next) {
+    log.info('userController: called postRegistration method');
+
     const body = request.body;
-    const json = {
+    const user  = {
         username: body.username,
         email: body.email,
         password: body.password
     };
 
-    if (body.firstName !== '') json.firstName = body.firstName;
-    if (body.lastName !== '') json.lastName = body.lastName;
+    if (body.firstName !== '') user.firstName = body.firstName;
+    if (body.lastName !== '') user.lastName = body.lastName;
 
-    api.addUser(json, (err, res, body) => {
+    api.addUser(user, (err, res, body) => {
         if (err) return next(err);
         if (body.message)
             return response.sendPugFile(__dirname, 'error', {
@@ -112,13 +120,11 @@ function postRegistration(request, response, next) {
 }
 
 function postLogin(request, response, next) {
-    const body = request.body;
-    const json = {
-        email: body.email,
-        password: body.password
-    };
+    log.info('userController: called postLogin method');
 
-    api.authenticateUser(json, (err, res, body) => {
+    const body = request.body;
+
+    api.authenticateUser(body.email, body.password, (err, res, body) => {
         if (err) return next(err);
         if (body.message)
             return response.sendPugFile(__dirname, 'error', {

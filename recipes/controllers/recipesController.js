@@ -11,8 +11,8 @@ function newRecipes(request, response, next) {
 
     api.getRecipes((err, res, body) => {
         if (err) log.err(err);
-        if (body.message)
-            return response.sendPugFile(__dirname, 'error', {
+        if (body.message) {
+            const options = {
                 title: request.getText('Error'),
                 myProfile: request.getText('My Profile'),
                 newRecipes: request.getText('New Recipes'),
@@ -21,7 +21,9 @@ function newRecipes(request, response, next) {
                 path1: '/',
                 nameBt1: 'Home',
                 isVisitableTwoBt: false
-            });
+            };
+            return response.sendPugFile(__dirname, 'error', options);
+        }
 
         const options = {
             title: request.getText('New Recipes'),
@@ -35,7 +37,6 @@ function newRecipes(request, response, next) {
             recipes: body,
             goTo: request.getText('Go To'),
         };
-
         response.sendPugFile(__dirname, 'newRecipes', options);
     });
 }
@@ -44,11 +45,8 @@ function myRecipes(request, response, next) {
     log.info('recipesController: called myRecipes method');
 
     const cookies = request.cookies;
-    const json = {
-        account_id: cookies.account_id
-    };
 
-    api.getRecipesByID(json, (err, res, body) => {
+    api.getMyRecipes(cookies.token, (err, res, body) => {
         if (err) log.err(err);
         if (body.message)
             return response.sendPugFile(__dirname, 'error', {
