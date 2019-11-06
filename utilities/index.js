@@ -6,7 +6,6 @@ const path = require('path');
 const recipes = require('../recipes');
 const users = require('../users');
 const log = require('../logger');
-const locales = require('../locales');
 
 module.exports.initProject = initProject;
 
@@ -29,15 +28,18 @@ function initProject(app) {
         };
         next();
     }
+    function notFound(request, response) {
+        response.redirect('/newRecipes');
+    }
 
     app.set('view engine', 'pug');
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser());
     app.use(responseCustom);
-    app.use(locales);
     app.use(users);
     app.use(recipes);
+    app.use(notFound);
 
     log.debug('initializing: set view engine:pug');
-    log.debug('initializing: use bodyParser, cookieParser, responseCustom, locales, users, recipes');
+    log.debug('initializing: use bodyParser, cookieParser, responseCustom, users, recipes, notFound');
 }

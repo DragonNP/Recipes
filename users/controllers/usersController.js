@@ -1,5 +1,16 @@
 const api = require('../../api');
 const log = require('../../logger');
+const translation = require('../../translation');
+
+const error_options = {
+    title: translation.text('Error'),
+    myProfile: translation.text('My Profile'),
+    newRecipes: translation.text('New Recipes'),
+    myRecipes: translation.text('My Recipes'),
+    path1: '/',
+    nameBt1: 'Home',
+    isVisitableTwoBt: false
+};
 
 module.exports = {
     getRegistration,
@@ -16,17 +27,17 @@ function getRegistration(request, response, next) {
 
     response.sendPugFile(__dirname, 'registration',
         {
-            title: request.getText('Registration'),
-            myProfile: request.getText('My Profile'),
-            newRecipes: request.getText('New Recipes'),
-            myRecipes: request.getText('My Recipes'),
-            username: request.getText('Username'),
-            firstName: request.getText('First Name'),
-            lastName: request.getText('Last Name'),
-            email: request.getText('Email'),
-            password: request.getText('Password'),
-            signUp: request.getText('Sign Up'),
-            orYouHaveAccount: request.getText('Or you have account')
+            title: translation.text('Registration'),
+            myProfile: translation.text('My Profile'),
+            newRecipes: translation.text('New Recipes'),
+            myRecipes: translation.text('My Recipes'),
+            username: translation.text('Username'),
+            firstName: translation.text('First Name'),
+            lastName: translation.text('Last Name'),
+            email: translation.text('Email'),
+            password: translation.text('Password'),
+            signUp: translation.text('Sign Up'),
+            orYouHaveAccount: translation.text('Or you have account')
         });
 }
 
@@ -34,14 +45,14 @@ function getLogin(request, response, next) {
     log.info('userController: called getLogin method');
 
     response.sendPugFile(__dirname, 'login', {
-        title: request.getText('Login'),
-        myProfile: request.getText('My Profile'),
-        newRecipes: request.getText('New Recipes'),
-        myRecipes: request.getText('My Recipes'),
-        email: request.getText('Email'),
-        password: request.getText('Password'),
-        signIn: request.getText('Sign In'),
-        orYouNotHaveAccount: request.getText('Or you not have account'),
+        title: translation.text('Login'),
+        myProfile: translation.text('My Profile'),
+        newRecipes: translation.text('New Recipes'),
+        myRecipes: translation.text('My Recipes'),
+        email: translation.text('Email'),
+        password: translation.text('Password'),
+        signIn: translation.text('Sign In'),
+        orYouNotHaveAccount: translation.text('Or you not have account'),
     });
 }
 
@@ -51,30 +62,22 @@ function getMyProfile(request, response, next) {
     const cookies = request.cookies;
 
     api.getMyProfile(cookies.token, (err, res, body) => {
-        if(err) return next(err);
-        if(body.message)
-            return response.sendPugFile(__dirname, 'error', {
-                title: request.getText('Error'),
-                myProfile: request.getText('My Profile'),
-                newRecipes: request.getText('New Recipes'),
-                myRecipes: request.getText('My Recipes'),
-                error: request.getText(body.message),
-                path1: '/',
-                nameBt1: 'Home',
-                isVisitableTwoBt: false
-            });
+        if (err || body.message) {
+            error_options.error = translation.text(body.message || err);
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
 
         response.sendPugFile(__dirname, 'myProfile', {
-            title: request.getText('My Profile'),
-            myProfile: request.getText('My Profile'),
-            newRecipes: request.getText('New Recipes'),
-            myRecipes: request.getText('My Recipes'),
-            myPersonalProfile: request.getText('My Personal Profile'),
+            title: translation.text('My Profile'),
+            myProfile: translation.text('My Profile'),
+            newRecipes: translation.text('New Recipes'),
+            myRecipes: translation.text('My Recipes'),
+            myPersonalProfile: translation.text('My Personal Profile'),
             username: body.username,
             firstName: body.firstName,
             lastName: body.lastName,
             email: body.email,
-            logout: request.getText('logout')
+            logout: translation.text('logout')
         });
     });
 }
@@ -101,18 +104,10 @@ function postRegistration(request, response, next) {
     if (body.lastName !== '') user.lastName = body.lastName;
 
     api.addUser(user, (err, res, body) => {
-        if (err) return next(err);
-        if (body.message)
-            return response.sendPugFile(__dirname, 'error', {
-                title: request.getText('Error'),
-                myProfile: request.getText('My Profile'),
-                newRecipes: request.getText('New Recipes'),
-                myRecipes: request.getText('My Recipes'),
-                error: request.getText(body.message),
-                path1: '/',
-                nameBt1: 'Home',
-                isVisitableTwoBt: false
-            });
+        if (err || body.message) {
+            error_options.error = translation.text(body.message || err);
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
 
         response.cookie('token', body.token)
             .redirect('/');
@@ -125,18 +120,10 @@ function postLogin(request, response, next) {
     const body = request.body;
 
     api.authenticateUser(body.email, body.password, (err, res, body) => {
-        if (err) return next(err);
-        if (body.message)
-            return response.sendPugFile(__dirname, 'error', {
-                title: request.getText('Error'),
-                myProfile: request.getText('My Profile'),
-                newRecipes: request.getText('New Recipes'),
-                myRecipes: request.getText('My Recipes'),
-                error: request.getText(body.message),
-                path1: '/',
-                nameBt1: 'Home',
-                isVisitableTwoBt: false
-            });
+        if (err || body.message) {
+            error_options.error = translation.text(body.message || err);
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
 
         response.cookie('token', body.token)
             .redirect('/');

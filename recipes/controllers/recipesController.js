@@ -1,5 +1,16 @@
 const api = require('../../api');
 const log = require('../../logger');
+const translation = require('../../translation');
+
+const error_options = {
+    title: translation.text('Error'),
+    myProfile: translation.text('My Profile'),
+    newRecipes: translation.text('New Recipes'),
+    myRecipes: translation.text('My Recipes'),
+    path1: '/',
+    nameBt1: 'Home',
+    isVisitableTwoBt: false
+};
 
 module.exports = {
     newRecipes,
@@ -10,32 +21,22 @@ function newRecipes(request, response, next) {
     log.info('recipesController: called newRecipes method');
 
     api.getRecipes((err, res, body) => {
-        if (err) log.err(err);
-        if (body.message) {
-            const options = {
-                title: request.getText('Error'),
-                myProfile: request.getText('My Profile'),
-                newRecipes: request.getText('New Recipes'),
-                myRecipes: request.getText('My Recipes'),
-                error: request.getText(body.message),
-                path1: '/',
-                nameBt1: 'Home',
-                isVisitableTwoBt: false
-            };
-            return response.sendPugFile(__dirname, 'error', options);
+        if (err || body.message) {
+            error_options.error = translation.text(body.message || err);
+            return response.sendPugFile(__dirname, 'error', error_options);
         }
 
         const options = {
-            title: request.getText('New Recipes'),
-            myProfile: request.getText('My profile'),
-            newRecipes: request.getText('New recipes'),
-            myRecipes: request.getText('My recipes'),
-            image: request.getText('Image'),
-            name: request.getText('Name'),
-            description: request.getText('Description'),
-            ingredients: request.getText('Ingredients'),
+            title: translation.text('New Recipes'),
+            myProfile: translation.text('My profile'),
+            newRecipes: translation.text('New recipes'),
+            myRecipes: translation.text('My recipes'),
+            image: translation.text('Image'),
+            name: translation.text('Name'),
+            description: translation.text('Description'),
+            ingredients: translation.text('Ingredients'),
             recipes: body,
-            goTo: request.getText('Go To'),
+            goTo: translation.text('Go To'),
         };
         response.sendPugFile(__dirname, 'newRecipes', options);
     });
@@ -47,31 +48,23 @@ function myRecipes(request, response, next) {
     const cookies = request.cookies;
 
     api.getMyRecipes(cookies.token, (err, res, body) => {
-        if (err) log.err(err);
-        if (body.message)
-            return response.sendPugFile(__dirname, 'error', {
-                title: request.getText('Error'),
-                myProfile: request.getText('My Profile'),
-                newRecipes: request.getText('New Recipes'),
-                myRecipes: request.getText('My Recipes'),
-                error: request.getText(body.message),
-                path1: '/',
-                nameBt1: 'Home',
-                isVisitableTwoBt: false
-            });
+        if (err || body.message) {
+            error_options.error = translation.text(body.message || err);
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
 
         const options = {
-            title: request.getText('My Recipes'),
-            myProfile: request.getText('My profile'),
-            newRecipes: request.getText('New recipes'),
-            myRecipes: request.getText('My recipes'),
-            image: request.getText('Image'),
-            name: request.getText('Name'),
-            description: request.getText('Description'),
-            ingredients: request.getText('Ingredients'),
+            title: translation.text('My Recipes'),
+            myProfile: translation.text('My profile'),
+            newRecipes: translation.text('New recipes'),
+            myRecipes: translation.text('My recipes'),
+            image: translation.text('Image'),
+            name: translation.text('Name'),
+            description: translation.text('Description'),
+            ingredients: translation.text('Ingredients'),
             recipes: body,
-            goTo: request.getText('Go To'),
-            addRecipe: request.getText('Add Recipe'),
+            goTo: translation.text('Go To'),
+            addRecipe: translation.text('Add Recipe'),
         };
 
         response.sendPugFile(__dirname, 'myRecipes', options);

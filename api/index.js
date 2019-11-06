@@ -182,10 +182,10 @@ function getUserById(token, id, fn) {
 
 function addUser(user, fn) {
     log.info('api: called addUser method');
-
+    log.debug(user);
     const options = {
         method: 'POST',
-        url: url_users.add,
+        url: url_users.registration,
         form: user,
         json: true
     };

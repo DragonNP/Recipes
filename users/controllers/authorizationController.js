@@ -1,5 +1,5 @@
-const api = require('../../api');
 const log = require('../../logger');
+const translation = require('../../translation');
 
 module.exports = {
     auth
@@ -11,11 +11,6 @@ function auth(request, response, next) {
     const cookies = request.cookies;
     const url = request.url;
 
-    if (cookies.token && !cookies.account_id)
-         return api.getMyProfile(cookies.token, (err, res, body) => {
-            response.cookie('account_id', body._id).redirect('/');
-        });
-
     if (cookies.token |
         cookies.token !== undefined ||
         url === '/' ||
@@ -26,15 +21,15 @@ function auth(request, response, next) {
 
     response.sendPugFile(__dirname, 'error',
         {
-            title: request.getText('Error'),
-            myProfile: request.getText('My Profile'),
-            newRecipes: request.getText('New Recipes'),
-            myRecipes: request.getText('My Recipes'),
-            error: request.getText('You are not authorized'),
-            path1: request.getText('/registration'),
-            nameBt1: request.getText('Sign Up'),
+            title: translation.text('Error'),
+            myProfile: translation.text('My Profile'),
+            newRecipes: translation.text('New Recipes'),
+            myRecipes: translation.text('My Recipes'),
+            error: translation.text('You are not authorized'),
+            path1: translation.text('/registration'),
+            nameBt1: translation.text('Sign Up'),
             isVisitableTwoBt: true,
-            path2: request.getText('/login'),
-            nameBt2: request.getText('Sign In')
+            path2: translation.text('/login'),
+            nameBt2: translation.text('Sign In')
         });
 }
