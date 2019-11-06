@@ -14,7 +14,8 @@ const error_options = {
 
 module.exports = {
     newRecipes,
-    myRecipes
+    myRecipes,
+    recipe
 };
 
 function newRecipes(request, response, next) {
@@ -68,5 +69,47 @@ function myRecipes(request, response, next) {
         };
 
         response.sendPugFile(__dirname, 'myRecipes', options);
+    });
+}
+
+function recipe(request, response, next) {
+    log.info('recipesController: called recipe method');
+
+    const query = request.query;
+
+    if(!query.id)
+        return response.redirect('/newRecipes');
+
+    api.getRecipeById(query.id, (err, res, body) => {
+        if (err || body.message) {
+            error_options.error = translation.text(body.message || err);
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
+
+        const user = body;
+
+        api.getUserById(body.account_id, (err, res, body) => {
+            if (err || body.message) {
+                error_options.error = translation.text(body.message || err);
+                return response.sendPugFile(__dirname, 'error', error_options);
+            }
+
+            response.sendPugFile(__dirname, 'recipe', {
+                title: translation.text('Recipe: ' + user.name),
+                myProfile: translation.text('My profile'),
+                newRecipes: translation.text('New recipes'),
+                myRecipes: translation.text('My recipes'),
+
+                image: translation.text('Image'),
+                name: translation.text('Name'),
+                description: translation.text('Description'),
+                ingredients: translation.text('Ingredients'),
+                instruction: translation.text('Instruction'),
+                date: translation.text('Date'),
+                creator: translation.text('Creator'),
+                username: body.username,
+                recipes: user,
+            })
+        });
     });
 }

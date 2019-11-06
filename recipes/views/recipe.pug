@@ -1,0 +1,22 @@
+extends layouts/default_layout
+
+block content
+    - let items = recipes || ''
+    h1 #{title}
+    table
+        tr
+            th #{image}
+            th #{name}
+            th #{description}
+            th #{ingredients}
+            th #{instruction}
+            th #{date}
+            th #{creator}
+        tr
+            td #{items.path_img}
+            td #{items.name}
+            td #{items.description}
+            td #{items.ingredients}
+            td #{items.instruction}
+            td #{items.date}
+            td #{username}

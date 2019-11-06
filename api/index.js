@@ -23,7 +23,7 @@ module.exports = {
     // Recipes
     getMyRecipes,
     getRecipes,
-    getRecipesById,
+    getRecipeById,
     getRecipesByAccountId,
     addRecipe,
     addFavourites,
@@ -66,11 +66,11 @@ function getRecipes(fn) {
     rp(options, fn);
 }
 
-function getRecipesById(id, fn) {
+function getRecipeById(id, fn) {
     log.info('api: called getRecipesById method');
 
     const json = {
-        _id: id
+        id: id
     };
     const options = {
         method: 'GET',
@@ -163,11 +163,10 @@ function getMyProfile(token, fn) {
     rp(options, fn);
 }
 
-function getUserById(token, id, fn) {
+function getUserById(id, fn) {
     log.info('api: called getUserById method');
 
     const json = {
-        token: token,
         id: id
     };
     const options = {
