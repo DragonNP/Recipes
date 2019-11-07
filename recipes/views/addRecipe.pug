@@ -1,0 +1,28 @@
+extends layouts/default_layout
+
+block content
+    form(action='/addRecipe', method='post')
+        br
+        label #{name}
+        br
+        input(type='text', name='name')
+        br
+        label #{description}
+        br
+        input(type='text', name='description')
+        br
+        label #{ingredients}
+        br
+        input(type='text', name='ingredients')
+        br
+        label #{instruction}
+        br
+        input(type='text', name='instruction')
+        br
+        label #{image}
+        br
+        input(type='text', name='image')
+        br
+        input(type='submit', value=addRecipe)
+        br
+        a(href='/newRecipes'): button(type="button") #{home}

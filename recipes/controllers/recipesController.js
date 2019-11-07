@@ -15,7 +15,9 @@ const error_options = {
 module.exports = {
     newRecipes,
     myRecipes,
-    recipe
+    recipe,
+    getAddRecipe,
+    postCreateRecipe
 };
 
 function newRecipes(request, response, next) {
@@ -112,4 +114,26 @@ function recipe(request, response, next) {
             })
         });
     });
+}
+
+function getAddRecipe(request, response, next) {
+    log.info('recipesController: called getCreateRecipe method');
+    response.sendPugFile(__dirname, 'addRecipe', {
+        title: translation.text('Add Recipe'),
+        myProfile: translation.text('My profile'),
+        newRecipes: translation.text('New recipes'),
+        myRecipes: translation.text('My recipes'),
+
+        name: translation.text('Name Recipe'),
+        description: translation.text('Description'),
+        ingredients: translation.text('Ingredients'),
+        instruction: translation.text('Instruction'),
+        image: translation.text('Image'),
+        addRecipe: translation.text('Add Recipe'),
+        home: translation.text('Home')
+    });
+}
+
+function postCreateRecipe(request, response, next) {
+    const body = request.body
 }

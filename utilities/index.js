@@ -28,9 +28,6 @@ function initProject(app) {
         };
         next();
     }
-    function notFound(request, response) {
-        response.redirect('/newRecipes');
-    }
 
     app.set('view engine', 'pug');
     app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,7 +35,6 @@ function initProject(app) {
     app.use(responseCustom);
     app.use(users);
     app.use(recipes);
-    app.use(notFound);
 
     log.debug('initializing: set view engine:pug');
     log.debug('initializing: use bodyParser, cookieParser, responseCustom, users, recipes, notFound');
