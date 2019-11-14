@@ -37,17 +37,17 @@ function setLevel(level) {
 function debug(msg) {
     if (!isDebug) return;
 
-    console.log('DEBUG:'.blue, msg);
+    console.log('[', 'DEBUG'.blue, ']', msg);
 }
 
 function info(msg) {
     if (!isInfo) return '';
 
-    console.log('INFO:'.green, msg);
+    console.log('[ ', 'OK'.green, '  ]', msg);
 }
 
 function err(msg) {
     if (!isErr) return;
 
-    console.log('ERR:'.red, new Error(msg).message);
+    console.log('[', 'ERROR'.red, ']', new Error(msg).message);
 }

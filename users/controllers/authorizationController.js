@@ -22,9 +22,6 @@ function auth(request, response, next) {
     response.sendPugFile(__dirname, 'error',
         {
             title: translation.text('Error'),
-            myProfile: translation.text('My Profile'),
-            newRecipes: translation.text('New Recipes'),
-            myRecipes: translation.text('My Recipes'),
             error: translation.text('You are not authorized'),
             path1: translation.text('/registration'),
             nameBt1: translation.text('Sign Up'),

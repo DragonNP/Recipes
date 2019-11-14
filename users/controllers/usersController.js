@@ -4,9 +4,6 @@ const translation = require('../../translation');
 
 const error_options = {
     title: translation.text('Error'),
-    myProfile: translation.text('My Profile'),
-    newRecipes: translation.text('New Recipes'),
-    myRecipes: translation.text('My Recipes'),
     path1: '/',
     nameBt1: 'Home',
     isVisitableTwoBt: false
@@ -28,9 +25,6 @@ function getRegistration(request, response, next) {
     response.sendPugFile(__dirname, 'registration',
         {
             title: translation.text('Registration'),
-            myProfile: translation.text('My Profile'),
-            newRecipes: translation.text('New Recipes'),
-            myRecipes: translation.text('My Recipes'),
             username: translation.text('Username'),
             firstName: translation.text('First Name'),
             lastName: translation.text('Last Name'),
@@ -46,9 +40,6 @@ function getLogin(request, response, next) {
 
     response.sendPugFile(__dirname, 'login', {
         title: translation.text('Login'),
-        myProfile: translation.text('My Profile'),
-        newRecipes: translation.text('New Recipes'),
-        myRecipes: translation.text('My Recipes'),
         email: translation.text('Email'),
         password: translation.text('Password'),
         signIn: translation.text('Sign In'),
@@ -68,15 +59,12 @@ function getMyProfile(request, response, next) {
         }
 
         response.sendPugFile(__dirname, 'myProfile', {
-            title: translation.text('My Profile'),
-            myProfile: translation.text('My Profile'),
-            newRecipes: translation.text('New Recipes'),
-            myRecipes: translation.text('My Recipes'),
-            myPersonalProfile: translation.text('My Personal Profile'),
             username: body.username,
             firstName: body.firstName,
             lastName: body.lastName,
             email: body.email,
+
+            edit: translation.text('edit'),
             logout: translation.text('logout')
         });
     });

@@ -4,9 +4,6 @@ const translation = require('../../translation');
 
 const error_options = {
     title: translation.text('Error'),
-    myProfile: translation.text('My Profile'),
-    newRecipes: translation.text('New Recipes'),
-    myRecipes: translation.text('My Recipes'),
     path1: '/',
     nameBt1: 'Home',
     isVisitableTwoBt: false
@@ -15,7 +12,7 @@ const error_options = {
 module.exports = {
     newRecipes,
     myRecipes,
-    recipe,
+    getRecipe,
     getAddRecipe,
     postCreateRecipe
 };
@@ -31,9 +28,6 @@ function newRecipes(request, response, next) {
 
         const options = {
             title: translation.text('New Recipes'),
-            myProfile: translation.text('My profile'),
-            newRecipes: translation.text('New recipes'),
-            myRecipes: translation.text('My recipes'),
             image: translation.text('Image'),
             name: translation.text('Name'),
             description: translation.text('Description'),
@@ -58,9 +52,6 @@ function myRecipes(request, response, next) {
 
         const options = {
             title: translation.text('My Recipes'),
-            myProfile: translation.text('My profile'),
-            newRecipes: translation.text('New recipes'),
-            myRecipes: translation.text('My recipes'),
             image: translation.text('Image'),
             name: translation.text('Name'),
             description: translation.text('Description'),
@@ -74,7 +65,7 @@ function myRecipes(request, response, next) {
     });
 }
 
-function recipe(request, response, next) {
+function getRecipe(request, response, next) {
     log.info('recipesController: called recipe method');
 
     const query = request.query;
@@ -97,10 +88,7 @@ function recipe(request, response, next) {
             }
 
             response.sendPugFile(__dirname, 'recipe', {
-                title: translation.text('Recipe: ' + user.name),
-                myProfile: translation.text('My profile'),
-                newRecipes: translation.text('New recipes'),
-                myRecipes: translation.text('My recipes'),
+                title: translation.text(user.name),
 
                 image: translation.text('Image'),
                 name: translation.text('Name'),
@@ -120,20 +108,35 @@ function getAddRecipe(request, response, next) {
     log.info('recipesController: called getCreateRecipe method');
     response.sendPugFile(__dirname, 'addRecipe', {
         title: translation.text('Add Recipe'),
-        myProfile: translation.text('My profile'),
-        newRecipes: translation.text('New recipes'),
-        myRecipes: translation.text('My recipes'),
 
         name: translation.text('Name Recipe'),
         description: translation.text('Description'),
         ingredients: translation.text('Ingredients'),
         instruction: translation.text('Instruction'),
-        image: translation.text('Image'),
+        image: translation.text('Image path (beta)'),
         addRecipe: translation.text('Add Recipe'),
         home: translation.text('Home')
     });
 }
 
 function postCreateRecipe(request, response, next) {
-    const body = request.body
+    const body = request.body;
+
+    const recipe = {
+        token: request.cookies['token'],
+        name: body.name,
+        ingredients: body.ingredients,
+        instruction: body.instruction,
+        description: body.description,
+        path_img: body.image
+    };
+
+    api.addRecipe(recipe, (err, res, body) => {
+        if (err || body.message) {
+            error_options.error = translation.text(body.message || err);
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
+
+        response.redirect('/recipe?id='.concat(body.id));
+    })
 }
