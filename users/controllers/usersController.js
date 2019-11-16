@@ -19,7 +19,7 @@ module.exports = {
     postLogin
 };
 
-function getRegistration(request, response, next) {
+async function getRegistration(request, response, next) {
     log.info('userController: called getRegistration method');
 
     response.sendPugFile(__dirname, 'registration',
@@ -35,7 +35,7 @@ function getRegistration(request, response, next) {
         });
 }
 
-function getLogin(request, response, next) {
+async function getLogin(request, response, next) {
     log.info('userController: called getLogin method');
 
     response.sendPugFile(__dirname, 'login', {
@@ -47,7 +47,7 @@ function getLogin(request, response, next) {
     });
 }
 
-function getMyProfile(request, response, next) {
+async function getMyProfile(request, response, next) {
     log.info('userController: called getMyProfile method');
 
     const cookies = request.cookies;
@@ -70,7 +70,7 @@ function getMyProfile(request, response, next) {
     });
 }
 
-function logout(request, response, next) {
+async function logout(request, response, next) {
     log.info('userController: called logout method');
 
     response.clearCookie('token')
@@ -78,7 +78,7 @@ function logout(request, response, next) {
 }
 
 
-function postRegistration(request, response, next) {
+async function postRegistration(request, response, next) {
     log.info('userController: called postRegistration method');
 
     const body = request.body;
@@ -102,7 +102,7 @@ function postRegistration(request, response, next) {
     });
 }
 
-function postLogin(request, response, next) {
+async function postLogin(request, response, next) {
     log.info('userController: called postLogin method');
 
     const body = request.body;

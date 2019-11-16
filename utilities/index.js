@@ -1,3 +1,4 @@
+const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const pug = require('pug');
@@ -15,6 +16,7 @@ function initProject(app) {
 
     app.set('view engine', 'pug');
     app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(express.static('wwwroot'));
     app.use(cookieParser());
     app.use(responseCustom);
     app.use(users);

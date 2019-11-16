@@ -13,7 +13,9 @@ block content
         br
         label #{ingredients}
         br
-        input(type='text', name='ingredients')
+        div(id='ingredients')
+        input(type='hidden' value=0 name='numberIngredients')
+        input(type='button' value='Add' onclick="addIngredient()")
         br
         label #{instruction}
         br

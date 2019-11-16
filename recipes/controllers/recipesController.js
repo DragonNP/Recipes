@@ -17,12 +17,12 @@ module.exports = {
     postCreateRecipe
 };
 
-function newRecipes(request, response, next) {
+async function newRecipes(request, response, next) {
     log.info('recipesController: called newRecipes method');
 
     api.getRecipes((err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(body.message || err);
+            error_options.error = translation.text(err || body.message);
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
@@ -39,14 +39,14 @@ function newRecipes(request, response, next) {
     });
 }
 
-function myRecipes(request, response, next) {
+async function myRecipes(request, response, next) {
     log.info('recipesController: called myRecipes method');
 
     const cookies = request.cookies;
 
     api.getMyRecipes(cookies.token, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(body.message || err);
+            error_options.error = translation.text(err || body.message);
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
@@ -65,31 +65,27 @@ function myRecipes(request, response, next) {
     });
 }
 
-function getRecipe(request, response, next) {
+async function getRecipe(request, response, next) {
     log.info('recipesController: called recipe method');
 
     const query = request.query;
-
     if(!query.id)
         return response.redirect('/newRecipes');
 
     api.getRecipeById(query.id, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(body.message || err);
+            error_options.error = translation.text(err || body.message);
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
-        const user = body;
-
+        const recipe = body;
         api.getUserById(body.account_id, (err, res, body) => {
             if (err || body.message) {
                 error_options.error = translation.text(body.message || err);
                 return response.sendPugFile(__dirname, 'error', error_options);
             }
-
             response.sendPugFile(__dirname, 'recipe', {
-                title: translation.text(user.name),
-
+                title: translation.text(recipe.name),
                 image: translation.text('Image'),
                 name: translation.text('Name'),
                 description: translation.text('Description'),
@@ -98,13 +94,13 @@ function getRecipe(request, response, next) {
                 date: translation.text('Date'),
                 creator: translation.text('Creator'),
                 username: body.username,
-                recipes: user,
+                recipe: recipe,
             })
         });
     });
 }
 
-function getAddRecipe(request, response, next) {
+async function getAddRecipe(request, response, next) {
     log.info('recipesController: called getCreateRecipe method');
     response.sendPugFile(__dirname, 'addRecipe', {
         title: translation.text('Add Recipe'),
@@ -119,24 +115,15 @@ function getAddRecipe(request, response, next) {
     });
 }
 
-function postCreateRecipe(request, response, next) {
+async function postCreateRecipe(request, response, next) {
     const body = request.body;
+    body.token = request.cookies['token'];
 
-    const recipe = {
-        token: request.cookies['token'],
-        name: body.name,
-        ingredients: body.ingredients,
-        instruction: body.instruction,
-        description: body.description,
-        path_img: body.image
-    };
-
-    api.addRecipe(recipe, (err, res, body) => {
+    api.addRecipe(body, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(body.message || err);
+            error_options.error = translation.text(err || body.message);
             return response.sendPugFile(__dirname, 'error', error_options);
         }
-
         response.redirect('/recipe?id='.concat(body.id));
-    })
+    });
 }

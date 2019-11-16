@@ -5,8 +5,8 @@ const uri = 'https://recipes-api-dragonnp.herokuapp.com';
 const url_recipes = {
     my: `${uri}/recipes/my`,
     recipes: `${uri}/recipes/all`,
-    byId: `${uri}/recipes/byId`,
-    byAccountId: `${uri}/recipes/byAccountId`,
+    id: `${uri}/recipes/id`,
+    accountId: `${uri}/recipes/accountId`,
     add: `${uri}/recipes/add`,
     favourites: `${uri}/recipes/addFavourites`,
     delRecipe: `${uri}/recipes`
@@ -74,7 +74,7 @@ function getRecipeById(id, fn) {
     };
     const options = {
         method: 'GET',
-        url: url_recipes.byId,
+        url: url_recipes.id,
         form: json,
         json: true
     };
@@ -90,7 +90,7 @@ function getRecipesByAccountId(id, fn) {
     };
     const options = {
         method: 'GET',
-        url: url_recipes.byAccountId,
+        url: url_recipes.accountId,
         form: json,
         json: true
     };
