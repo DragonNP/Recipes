@@ -26,8 +26,6 @@ async function getRegistration(request, response, next) {
         {
             title: translation.text('Registration'),
             username: translation.text('Username'),
-            firstName: translation.text('First Name'),
-            lastName: translation.text('Last Name'),
             email: translation.text('Email'),
             password: translation.text('Password'),
             signUp: translation.text('Sign Up'),
@@ -87,9 +85,6 @@ async function postRegistration(request, response, next) {
         email: body.email,
         password: body.password
     };
-
-    if (body.firstName !== '') user.firstName = body.firstName;
-    if (body.lastName !== '') user.lastName = body.lastName;
 
     api.addUser(user, (err, res, body) => {
         if (err || body.message) {
