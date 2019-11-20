@@ -36,6 +36,7 @@ function responseCustom(request, response, next) {
         options.myProfile = translation.text('My Profile');
         options.newRecipes = translation.text('New Recipes');
         options.myRecipes = translation.text('My Recipes');
+        options.addRecipe = translation.text('Add Recipe');
 
         pug.renderFile(
             path.join(dirname, '../views/', filename + '.pug'),
