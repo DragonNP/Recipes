@@ -1,9 +1,8 @@
 const api = require('../../api');
 const log = require('../../logger');
-const translation = require('../../translation');
 
 const error_options = {
-    title: translation.text('Error'),
+    title: 'Error',
     path1: '/',
     nameBt1: 'Home',
     isVisitableTwoBt: false
@@ -22,18 +21,18 @@ async function newRecipes(request, response, next) {
 
     api.getRecipes((err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(err || body.message);
+            error_options.error = err || body.message;
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
         const options = {
-            title: translation.text('New Recipes'),
-            image: translation.text('Image'),
-            name: translation.text('Name'),
-            description: translation.text('Description'),
-            ingredients: translation.text('Ingredients'),
+            title: 'New Recipes',
+            image: 'Image',
+            name: 'Name',
+            description: 'Description',
+            ingredients: 'Ingredients',
             recipes: body,
-            goTo: translation.text('Go To'),
+            goTo: 'Go To',
         };
         response.sendPugFile(__dirname, 'newRecipes', options);
     });
@@ -46,19 +45,19 @@ async function myRecipes(request, response, next) {
 
     api.getMyRecipes(cookies.token, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(err || body.message);
+            error_options.error = err || body.message;
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
         const options = {
-            title: translation.text('My Recipes'),
-            image: translation.text('Image'),
-            name: translation.text('Name'),
-            description: translation.text('Description'),
-            ingredients: translation.text('Ingredients'),
+            title: 'My Recipes',
+            image: 'Image',
+            name: 'Name',
+            description: 'Description',
+            ingredients: 'Ingredients',
             recipes: body,
-            goTo: translation.text('Go To'),
-            addRecipe: translation.text('Add Recipe'),
+            goTo: 'Go To',
+            addRecipe: 'Add Recipe',
         };
 
         response.sendPugFile(__dirname, 'myRecipes', options);
@@ -74,25 +73,25 @@ async function getRecipe(request, response, next) {
 
     api.getRecipeById(query.id, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(err || body.message);
+            error_options.error = err || body.message;
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
         const recipe = body;
         api.getUserById(body.account_id, (err, res, body) => {
             if (err || body.message) {
-                error_options.error = translation.text(body.message || err);
+                error_options.error = body.message || err;
                 return response.sendPugFile(__dirname, 'error', error_options);
             }
             response.sendPugFile(__dirname, 'recipe', {
-                title: translation.text(recipe.name),
-                image: translation.text('Image'),
-                name: translation.text('Name'),
-                description: translation.text('Description'),
-                ingredients: translation.text('Ingredients'),
-                instruction: translation.text('Instruction'),
-                date: translation.text('Date'),
-                creator: translation.text('Creator'),
+                title: recipe.name,
+                image: 'Image',
+                name: 'Name',
+                description: 'Description',
+                ingredients: 'Ingredients',
+                instruction: 'Instruction',
+                dateAdded: 'Date Added',
+                author: 'Author',
                 username: body.username,
                 recipe: recipe,
             })
@@ -103,15 +102,15 @@ async function getRecipe(request, response, next) {
 async function getAddRecipe(request, response, next) {
     log.info('recipesController: called getCreateRecipe method');
     response.sendPugFile(__dirname, 'addRecipe', {
-        title: translation.text('Add Recipe'),
+        title: 'Add Recipe',
 
-        name: translation.text('Name Recipe'),
-        description: translation.text('Description'),
-        ingredients: translation.text('Ingredients'),
-        instruction: translation.text('Instruction'),
-        image: translation.text('Image path (beta)'),
-        addRecipe: translation.text('Add Recipe'),
-        home: translation.text('Home')
+        name: 'Name Recipe',
+        description: 'Description',
+        ingredients: 'Ingredients',
+        instruction: 'Instruction',
+        image: 'Image path (beta)',
+        addRecipe: 'Add Recipe',
+        home: 'Home'
     });
 }
 
@@ -121,7 +120,7 @@ async function postCreateRecipe(request, response, next) {
 
     api.addRecipe(body, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(err || body.message);
+            error_options.error = err || body.message;
             return response.sendPugFile(__dirname, 'error', error_options);
         }
         response.redirect('/recipe?id='.concat(body.id));

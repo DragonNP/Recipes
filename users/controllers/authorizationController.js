@@ -1,5 +1,5 @@
 const log = require('../../logger');
-const translation = require('../../translation');
+const translator = require('../../translator');
 
 module.exports = {
     auth
@@ -21,12 +21,12 @@ function auth(request, response, next) {
 
     response.sendPugFile(__dirname, 'error',
         {
-            title: translation.text('Error'),
-            error: translation.text('You are not authorized'),
-            path1: translation.text('/registration'),
-            nameBt1: translation.text('Sign Up'),
+            title: translator.text('Error'),
+            error: translator.text('You are not authorized'),
+            path1: '/registration',
+            nameBt1: translator.text('Sign Up'),
             isVisitableTwoBt: true,
-            path2: translation.text('/login'),
-            nameBt2: translation.text('Sign In')
+            path2: '/login',
+            nameBt2: translator.text('Sign In')
         });
 }

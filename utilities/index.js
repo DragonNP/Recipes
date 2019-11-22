@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const pug = require('pug');
 const path = require('path');
 
-const translation = require('../translation');
+const translator = require('../translator');
 const recipes = require('../recipes');
 const users = require('../users');
 const log = require('../logger');
@@ -32,11 +32,13 @@ function responseCustom(request, response, next) {
         options = options || {};
 
         if (!options.title)
-            options.title = translation.text('Recipes');
-        options.myProfile = translation.text('My Profile');
-        options.newRecipes = translation.text('New Recipes');
-        options.myRecipes = translation.text('My Recipes');
-        options.addRecipe = translation.text('Add Recipe');
+            options.title = 'Recipes';
+        options.myProfile = 'My Profile';
+        options.newRecipes = 'New Recipes';
+        options.myRecipes = 'My Recipes';
+        options.addRecipe = 'Add Recipe';
+
+        options = translator.translate('ru', options);
 
         pug.renderFile(
             path.join(dirname, '../views/', filename + '.pug'),

@@ -1,6 +1,7 @@
 extends layouts/default_layout
 
 block content
+    script(src='js/script.js')
     - let items = recipe || ''
     h1 #{title}
     table
@@ -10,8 +11,8 @@ block content
             th #{description}
             th #{ingredients}
             th #{instruction}
-            th #{date}
-            th #{creator}
+            th #{dateAdded}
+            th #{author}
         tr
             td #{items.path_img}
             td #{items.name}

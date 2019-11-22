@@ -1,9 +1,8 @@
 const api = require('../../api');
 const log = require('../../logger');
-const translation = require('../../translation');
 
 const error_options = {
-    title: translation.text('Error'),
+    title: 'Error',
     path1: '/',
     nameBt1: 'Home',
     isVisitableTwoBt: false
@@ -24,12 +23,12 @@ async function getRegistration(request, response, next) {
 
     response.sendPugFile(__dirname, 'registration',
         {
-            title: translation.text('Registration'),
-            username: translation.text('Username'),
-            email: translation.text('Email'),
-            password: translation.text('Password'),
-            signUp: translation.text('Sign Up'),
-            orYouHaveAccount: translation.text('Or you have account')
+            title: 'Registration',
+            username: 'Username',
+            email: 'Email',
+            password: 'Password',
+            signUp: 'Sign Up',
+            orYouHaveAccount: 'Or you have account'
         });
 }
 
@@ -37,11 +36,11 @@ async function getLogin(request, response, next) {
     log.info('userController: called getLogin method');
 
     response.sendPugFile(__dirname, 'login', {
-        title: translation.text('Login'),
-        email: translation.text('Email'),
-        password: translation.text('Password'),
-        signIn: translation.text('Sign In'),
-        orYouNotHaveAccount: translation.text('Or you not have account'),
+        title: 'Login',
+        email: 'Email',
+        password: 'Password',
+        signIn: 'Sign In',
+        orYouNotHaveAccount: 'Or you not have account',
     });
 }
 
@@ -52,7 +51,7 @@ async function getMyProfile(request, response, next) {
 
     api.getMyProfile(cookies.token, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(body.message || err);
+            error_options.error = body.message || err;
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
@@ -62,8 +61,8 @@ async function getMyProfile(request, response, next) {
             lastName: body.lastName,
             email: body.email,
 
-            edit: translation.text('edit'),
-            logout: translation.text('logout')
+            edit: 'edit',
+            logout: 'logout'
         });
     });
 }
@@ -88,7 +87,7 @@ async function postRegistration(request, response, next) {
 
     api.addUser(user, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(body.message || err);
+            error_options.error = body.message || err;
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
@@ -104,7 +103,7 @@ async function postLogin(request, response, next) {
 
     api.authenticateUser(body.email, body.password, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = translation.text(body.message || err);
+            error_options.error = body.message || err;
             return response.sendPugFile(__dirname, 'error', error_options);
         }
 
