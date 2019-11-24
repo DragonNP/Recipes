@@ -1,0 +1,18 @@
+extends ../layouts/default_layout
+block content
+    div(class='row')
+        - for (let i = 1; i <= recipes.length; i++)
+            div(class='col-md-6 col-xl-3')
+                div(class='card')
+                    img(class='card-img-top img-fluid' src=recipes[recipes.length - i].img_path)
+
+                    div(class='card-body')
+                        h5(class='card-title') #{recipes[recipes.length - i].name}
+                        p(class='card-text') #{recipes[recipes.length - i].description}
+
+                    ul(class='list-group list-group-flush')
+                        li(class='list-group-item')
+                           span Ingredients: #{recipes[recipes.length - i].ingredients}
+
+                    div(class='card-body')
+                        a(href='/recipe?id='.concat(recipes[recipes.length - i]._id) class='btn btn-primary') #{goTo}

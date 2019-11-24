@@ -1,0 +1,19 @@
+extends ../layouts/default_layout
+block content
+    form(action="/registration", method="post")
+        br
+        label #{username}
+        br
+        input(type="text" name="username" required)
+        br
+        label #{email}
+        br
+        input(type="email" name="email" required)
+        br
+        label #{password}
+        br
+        input(type="password" name="password" required)
+        br
+        input(type="submit" value=signUp)
+        br
+        a(href='/login'): button(type="button") #{orYouHaveAccount}?

@@ -19,7 +19,7 @@ function auth(request, response, next) {
         url === '/newRecipes')
         return next();
 
-    response.sendPugFile(__dirname, 'error',
+    response.sendPugFile('error',
         {
             title: translator.text('Error'),
             error: translator.text('You are not authorized'),

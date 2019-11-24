@@ -7,6 +7,7 @@ const translateWords = {
       'New Recipes': 'Новые рецепты',
       'My Recipes': 'Мои Рецепты',
       'Add Recipe': 'Добавить рецепт',
+      'Favorites': 'Избранное',
 
       'Image': 'Изображение',
       'Name': 'Название',
@@ -22,6 +23,8 @@ const translateWords = {
       'New Recipes': 'New Recipes',
       'My Recipes': 'My Recipes',
       'Add Recipe': 'Add Recipe',
+      'Favorites': 'Favorites',
+
       'Image': 'Image',
       'Name': 'Name',
       'Description': 'Description',

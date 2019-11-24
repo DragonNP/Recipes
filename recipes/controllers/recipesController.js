@@ -12,6 +12,7 @@ module.exports = {
     newRecipes,
     myRecipes,
     getRecipe,
+    favorites,
     getAddRecipe,
     postCreateRecipe
 };
@@ -34,7 +35,7 @@ async function newRecipes(request, response, next) {
             recipes: body,
             goTo: 'Go To',
         };
-        response.sendPugFile(__dirname, 'newRecipes', options);
+        response.sendPugFile( 'recipesPages/newRecipes', options);
     });
 }
 
@@ -60,7 +61,7 @@ async function myRecipes(request, response, next) {
             addRecipe: 'Add Recipe',
         };
 
-        response.sendPugFile(__dirname, 'myRecipes', options);
+        response.sendPugFile('recipesPages/myRecipes', options);
     });
 }
 
@@ -81,9 +82,9 @@ async function getRecipe(request, response, next) {
         api.getUserById(body.account_id, (err, res, body) => {
             if (err || body.message) {
                 error_options.error = body.message || err;
-                return response.sendPugFile(__dirname, 'error', error_options);
+                return response.sendPugFile('error', error_options);
             }
-            response.sendPugFile(__dirname, 'recipe', {
+            response.sendPugFile('recipesPages/recipe', {
                 title: recipe.name,
                 image: 'Image',
                 name: 'Name',
@@ -99,9 +100,14 @@ async function getRecipe(request, response, next) {
     });
 }
 
+async function favorites(request, response, next) {
+    log.info('recipesController: called favourites method');
+    response.redirect('/newRecipes');
+}
+
 async function getAddRecipe(request, response, next) {
     log.info('recipesController: called getCreateRecipe method');
-    response.sendPugFile(__dirname, 'addRecipe', {
+    response.sendPugFile('recipesPages/addRecipe', {
         title: 'Add Recipe',
 
         name: 'Name Recipe',

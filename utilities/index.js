@@ -16,7 +16,7 @@ function initProject(app) {
 
     app.set('view engine', 'pug');
     app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(express.static('wwwroot'));
+    app.use('/assets', express.static('assets'));
     app.use(cookieParser());
     app.use(responseCustom);
     app.use(users);
@@ -27,21 +27,28 @@ function initProject(app) {
 }
 
 function responseCustom(request, response, next) {
-    response.sendPugFile = (dirname, filename, options) => {
+    response.sendPugFile = (pathFile, options) => {
 
         options = options || {};
 
         if (!options.title)
             options.title = 'Recipes';
+        options.welcome = 'Welcome';
+        options.userName = 'Nikita';
+        options.edit = 'Edit';
+        options.settings = 'Settings';
+        options.logout = 'Logout';
+
         options.myProfile = 'My Profile';
         options.newRecipes = 'New Recipes';
         options.myRecipes = 'My Recipes';
         options.addRecipe = 'Add Recipe';
+        options.favorites = 'Favorites';
 
-        options = translator.translate('ru', options);
+        options = translator.translate('en', options);
 
         pug.renderFile(
-            path.join(dirname, '../views/', filename + '.pug'),
+            path.join(__dirname, '../views/', pathFile + '.pug'),
             options,
             function (err, data) {
                 if (!err) return response.send(data);

@@ -1,0 +1,17 @@
+extends ../layouts/default_layout
+
+block content
+    table
+        tr
+            th #{image}
+            th #{name}
+            th #{description}
+        - for (let i = 0; i < recipes.length; i++)
+            tr
+                td #{recipes[i].path_img}
+                td #{recipes[i].name}
+                td #{recipes[i].description}
+                td
+                    a(href='/recipes?id='.concat(recipes[i]._id)): button(type="button") #{goTo}
+
+    a(href='/addRecipe'): button(type="button") #{addRecipe}

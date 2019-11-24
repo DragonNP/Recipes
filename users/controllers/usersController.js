@@ -21,7 +21,7 @@ module.exports = {
 async function getRegistration(request, response, next) {
     log.info('userController: called getRegistration method');
 
-    response.sendPugFile(__dirname, 'registration',
+    response.sendPugFile( 'usersPages/registration',
         {
             title: 'Registration',
             username: 'Username',
@@ -35,7 +35,7 @@ async function getRegistration(request, response, next) {
 async function getLogin(request, response, next) {
     log.info('userController: called getLogin method');
 
-    response.sendPugFile(__dirname, 'login', {
+    response.sendPugFile('usersPages/login', {
         title: 'Login',
         email: 'Email',
         password: 'Password',
@@ -52,10 +52,10 @@ async function getMyProfile(request, response, next) {
     api.getMyProfile(cookies.token, (err, res, body) => {
         if (err || body.message) {
             error_options.error = body.message || err;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            return response.sendPugFile('error', error_options);
         }
 
-        response.sendPugFile(__dirname, 'myProfile', {
+        response.sendPugFile( 'usersPages/myProfile', {
             username: body.username,
             firstName: body.firstName,
             lastName: body.lastName,
@@ -88,7 +88,7 @@ async function postRegistration(request, response, next) {
     api.addUser(user, (err, res, body) => {
         if (err || body.message) {
             error_options.error = body.message || err;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            return response.sendPugFile('error', error_options);
         }
 
         response.cookie('token', body.token)
@@ -104,7 +104,7 @@ async function postLogin(request, response, next) {
     api.authenticateUser(body.email, body.password, (err, res, body) => {
         if (err || body.message) {
             error_options.error = body.message || err;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            return response.sendPugFile('error', error_options);
         }
 
         response.cookie('token', body.token)
