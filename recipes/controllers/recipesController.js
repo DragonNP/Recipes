@@ -58,7 +58,6 @@ async function myRecipes(request, response, next) {
             ingredients: 'Ingredients',
             recipes: body,
             goTo: 'Go To',
-            addRecipe: 'Add Recipe',
         };
 
         response.sendPugFile('recipesPages/myRecipes', options);
@@ -93,7 +92,7 @@ async function getRecipe(request, response, next) {
                 instruction: 'Instruction',
                 dateAdded: 'Date Added',
                 author: 'Author',
-                username: body.username,
+                authorName: body.username,
                 recipe: recipe,
             })
         });
@@ -102,7 +101,27 @@ async function getRecipe(request, response, next) {
 
 async function favorites(request, response, next) {
     log.info('recipesController: called favourites method');
-    response.redirect('/newRecipes');
+
+    const cookies = request.cookies;
+
+    api.getMyProfile(cookies.token, (err, res, body) => {
+        if (err || body.message) {
+            error_options.error = err || body.message;
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
+
+        const options = {
+            title: 'Favorites',
+            image: 'Image',
+            name: 'Name',
+            description: 'Description',
+            ingredients: 'Ingredients',
+            recipes: body,
+            goTo: 'Go To',
+        };
+
+        response.sendPugFile('recipesPages/favorites', options);
+    });
 }
 
 async function getAddRecipe(request, response, next) {

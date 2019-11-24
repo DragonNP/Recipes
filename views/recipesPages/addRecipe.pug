@@ -1,7 +1,12 @@
 extends ../layouts/default_layout
 
 block content
-    script(src='assets/js/pages/addRecipe.js')
+
+    //- Plugins css
+    link(href="assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css")
+    link(href="assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css")
+    link(href="assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css")
+
     form(action='/addRecipe', method='post')
         br
         label #{name}
@@ -10,7 +15,18 @@ block content
         br
         label #{description}
         br
-        input(type='text', name='description')
+        <div id="snow-editor" style="height: 300px;">
+            h3
+                span(class="ql-size-large") Hello World!
+            p <br>
+            h3 This is an simple editable area.
+            p <br>
+            ul
+                li Select a text to reveal the toolbar.
+                li Edit rich document on-the-fly, so elastic!
+            p <br>
+            p End of simple area
+        //- end Snow-editor
         br
         label #{ingredients}
         br
@@ -29,3 +45,7 @@ block content
         input(type='submit', value=addRecipe)
         br
         a(href='/newRecipes'): button(type="button") #{home}
+
+        //- Plugins js
+        script(src="assets/libs/katex/katex.min.js")
+        script(src="assets/libs/quill/quill.min.js")

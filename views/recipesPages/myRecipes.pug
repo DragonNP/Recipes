@@ -1,17 +1,20 @@
 extends ../layouts/default_layout
-
 block content
-    table
-        tr
-            th #{image}
-            th #{name}
-            th #{description}
-        - for (let i = 0; i < recipes.length; i++)
-            tr
-                td #{recipes[i].path_img}
-                td #{recipes[i].name}
-                td #{recipes[i].description}
-                td
-                    a(href='/recipes?id='.concat(recipes[i]._id)): button(type="button") #{goTo}
+    div(class='row')
+        - for (let i = 1; i <= recipes.length; i++)
+            div(class='col-md-6 col-xl-3')
+                div(class='card')
+                    img(class='card-img-top img-fluid' src=recipes[recipes.length - i].img_path)
 
-    a(href='/addRecipe'): button(type="button") #{addRecipe}
+                    div(class='card-body')
+                        h5(class='card-title') #{recipes[recipes.length - i].name}
+                        p(class='card-text') #{recipes[recipes.length - i].description}
+
+                    ul(class='list-group list-group-flush')
+                        li(class='list-group-item')
+                            span Ingredients: #{recipes[recipes.length - i].ingredients}
+
+                    div(class='card-body')
+                        a(href='/recipe?id='.concat(recipes[recipes.length - i]._id) class='btn btn-primary') #{goTo}
+                        a(href='/editRecipe?id='.concat(recipes[recipes.length - i]._id) class='float-right btn btn-success waves-effect waves-light')
+                            span(class="mdi mdi-pencil")
