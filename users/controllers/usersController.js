@@ -13,6 +13,7 @@ module.exports = {
     getLogin,
     getMyProfile,
     logout,
+    setLanguage,
 
     postRegistration,
     postLogin
@@ -74,6 +75,12 @@ async function logout(request, response, next) {
         .redirect('/');
 }
 
+async function setLanguage(request, response, next) {
+    log.info('userController: called setLanguage method');
+
+    response.cookie('lang', request.query.lang)
+        .redirect('/');
+}
 
 async function postRegistration(request, response, next) {
     log.info('userController: called postRegistration method');

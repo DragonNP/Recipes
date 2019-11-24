@@ -1,5 +1,5 @@
 const log = require('../../logger');
-const translator = require('../../translator');
+const api = require('../../api');
 
 module.exports = {
     auth
@@ -16,17 +16,20 @@ function auth(request, response, next) {
         url === '/' ||
         url === '/registration' ||
         url === '/login' ||
-        url === '/newRecipes')
+        url === '/newRecipes' ||
+        url.includes('/recipe') ||
+        url.includes('/setLanguage')) {
         return next();
+    }
 
     response.sendPugFile('error',
         {
-            title: translator.text('Error'),
-            error: translator.text('You are not authorized'),
+            title: 'Error',
+            error: 'You are not authorized',
             path1: '/registration',
-            nameBt1: translator.text('Sign Up'),
+            nameBt1: 'Sign Up',
             isVisitableTwoBt: true,
             path2: '/login',
-            nameBt2: translator.text('Sign In')
+            nameBt2: 'Sign In'
         });
 }

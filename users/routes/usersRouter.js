@@ -10,6 +10,7 @@ router.get('/registration', usersController.getRegistration);
 router.get('/login', usersController.getLogin);
 router.get('/myProfile', usersController.getMyProfile);
 router.get('/logout', usersController.logout);
+router.get('/setLanguage', usersController.setLanguage);
 
 router.post('/registration', usersController.postRegistration);
 router.post('/login', usersController.postLogin);

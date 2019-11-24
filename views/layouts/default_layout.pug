@@ -49,18 +49,21 @@ html
                                                 i(class='fe-search')
                         //-End Search
                                                 
-                        //- Language 
+                        //- Language
                         li(class='dropdown d-none d-lg-block')
                             a(class='nav-link dropdown-toggle mr-0 waves-effect waves-light' data-toggle='dropdown' href='#' role='button' aria-haspopup='false' aria-expanded='false')
-                                img(src='assets/images/flags/us.jpg' class='mr-1' height='12')
-                                span(class='align-middle') English
+                                img(src='assets/images/flags/'.concat(currentLang.domain + '.jpg') class='mr-1' height='12')
+                                span(class='align-middle') #{currentLang.name}
                                     i(class='mdi mdi-chevron-down')
                 
                             div(class='dropdown-menu dropdown-menu-right')
-                                //- item
-                                a(href='#' class='dropdown-item notify-item')
-                                    img(src='assets/images/flags/russia.jpg' class='mr-1' height='12')
-                                    span(class='align-middle') Russian
+                                - for(let key in langs)
+                                    if key === currentLang.domain
+                                        - continue
+                                    //- item
+                                    a(href='/setLanguage?lang='.concat(key) class='dropdown-item notify-item')
+                                        img(src='assets/images/flags/'.concat(key + '.jpg') class='mr-1' height='12')
+                                        span(class='align-middle') #{langs[key]}
                         //- End Language
 
                         //- Notification
@@ -76,12 +79,12 @@ html
                                     h5(class='m-0')
                                         span(class='float-right')
                                             a(href='#' class='text-dark')
-                                                small Clear All
-                                        p Notification
+                                                small #{clearAll}
+                                        p #{notification}
 
                                 div(class='slimscroll noti-scroll')
                                     span(class='text-center')
-                                        p(class='notify-details') No notifications
+                                        p(class='notify-details') #{noNotifications}
 
                                 //-
                                     a(href='#' class='dropdown-item notify-item active')
@@ -117,41 +120,41 @@ html
                         
                         //- End Notification
                         
-                        //- Profile 
-                        li(class='dropdown notification-list')
-                            a(class='nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light' data-toggle='dropdown' href='#' role='button' aria-haspopup='false' aria-expanded='false')
-                                span(class='pro-user-name ml-1')
-                                    span #{userName}
-                                    i(class='mdi mdi-chevron-down')
-                
-                            div(class='dropdown-menu dropdown-menu-right profile-dropdown ')
+                        //- Profile
+                        if isProfile
+                            li(class='dropdown notification-list')
+                                a(class='nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light' data-toggle='dropdown' href='#' role='button' aria-haspopup='false' aria-expanded='false')
+                                    span(class='pro-user-name ml-1')
+                                        span #{username}
+                                        i(class='mdi mdi-chevron-down')
 
-                                //- item
-                                div(class='dropdown-header noti-title')
-                                    h6(class='text-overflow m-0') #{welcome}!
+                                div(class='dropdown-menu dropdown-menu-right profile-dropdown ')
 
-                                //- item
-                                a(href='/myProfile' class='dropdown-item notify-item')
-                                    i(class='remixicon-account-circle-line')
-                                    span #{myProfile}
+                                    //- item
+                                    div(class='dropdown-header noti-title')
+                                        h6(class='text-overflow m-0') #{welcome}!
 
-                                //- item
-                                a(href='#' class='dropdown-item notify-item')
-                                    i(class='ti-pencil')
-                                    span #{edit}
+                                    //- item
+                                    a(href='/myProfile' class='dropdown-item notify-item')
+                                        i(class='remixicon-account-circle-line')
+                                        span #{myProfile}
 
-                                //- item
-                                a(href='#' class='dropdown-item notify-item')
-                                    i(class='remixicon-settings-3-line')
-                                    span #{settings}
+                                    //- item
+                                    a(href='#' class='dropdown-item notify-item')
+                                        i(class='ti-pencil')
+                                        span #{edit}
 
-                                div(class='dropdown-divider')
+                                    //- item
+                                    a(href='#' class='dropdown-item notify-item')
+                                        i(class='remixicon-settings-3-line')
+                                        span #{settings}
 
-                                //- item
-                                a(href='/logout' class='dropdown-item notify-item')
-                                    i(class='remixicon-logout-box-line')
-                                    span #{logout}
+                                    div(class='dropdown-divider')
 
+                                    //- item
+                                    a(href='/logout' class='dropdown-item notify-item')
+                                        i(class='remixicon-logout-box-line')
+                                        span #{logout}
                         //- End Profile
 
                     //- LOGO

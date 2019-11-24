@@ -1,5 +1,6 @@
-module.exports.text = text;
+module.exports.getNameLang = getNameLang;
 module.exports.translate = translate;
+module.exports.getLanguages = getLanguages;
 
 const translateWords = {
   ru: {
@@ -9,6 +10,15 @@ const translateWords = {
       'Add Recipe': 'Добавить рецепт',
       'Favorites': 'Избранное',
 
+      'Notification': 'Уведомления',
+      'Clear All': 'Очистить всё',
+      'No Notifications': 'Нету уведомлений',
+
+      'Welcome': 'Добро Пожаловать',
+      'Edit': 'Изменить',
+      'Settings': 'Настройки',
+      'Logout': 'Выйти',
+
       'Image': 'Изображение',
       'Name': 'Название',
       'Description': 'Описание',
@@ -17,35 +27,35 @@ const translateWords = {
       'Instruction': 'Инструкция',
       'Date Added': 'Дата добавления',
       'Author': 'Автор',
-  },
-  en: {
-      'My Profile': 'My Profile',
-      'New Recipes': 'New Recipes',
-      'My Recipes': 'My Recipes',
-      'Add Recipe': 'Add Recipe',
-      'Favorites': 'Favorites',
 
-      'Image': 'Image',
-      'Name': 'Name',
-      'Description': 'Description',
-      'Ingredients': 'Ingredients',
-      'Go To': 'Go To',
-      'Instruction': 'Instruction',
-      'Date Added': 'Date Added',
-      'Author': 'Author',
-    }
+      'Error': 'Ошибка',
+      'You are not authorized': 'Вы не авторизованны',
+      'Sign Up': 'Зарегистроваться',
+      'Sign In': 'Войти',
+  }
 };
 
-function text(msg) {
-    return msg;
+const languages = {
+    'ru': 'Russian',
+    'us': 'English'
+};
+
+function getNameLang(domain) {
+    return languages[domain];
 }
 
 function translate(lang, array) {
     if (!array) return;
 
     const wordsTranslate = translateWords[lang];
+    if(wordsTranslate === undefined) return array;
+
     for (let key in array) {
         array[key] = wordsTranslate[array[key]] || array[key];
     }
     return array;
+}
+
+function getLanguages() {
+    return languages;
 }

@@ -8,6 +8,7 @@ const translator = require('../translator');
 const recipes = require('../recipes');
 const users = require('../users');
 const log = require('../logger');
+const api = require('../api');
 
 module.exports.initProject = initProject;
 
@@ -28,16 +29,19 @@ function initProject(app) {
 
 function responseCustom(request, response, next) {
     response.sendPugFile = (pathFile, options) => {
-
         options = options || {};
 
         if (!options.title)
             options.title = 'Recipes';
+        options.isProfile = true;
         options.welcome = 'Welcome';
-        options.userName = 'Nikita';
         options.edit = 'Edit';
         options.settings = 'Settings';
         options.logout = 'Logout';
+
+        options.notification = 'Notification';
+        options.clearAll = 'Clear All';
+        options.noNotifications = 'No Notifications';
 
         options.myProfile = 'My Profile';
         options.newRecipes = 'New Recipes';
@@ -45,17 +49,40 @@ function responseCustom(request, response, next) {
         options.addRecipe = 'Add Recipe';
         options.favorites = 'Favorites';
 
-        options = translator.translate('en', options);
+        options.currentLang = {
+            domain: request.cookies['lang'] || 'us',
+            name: translator.getNameLang(request.cookies['lang'] || 'us')
+        };
+        options.langs = translator.getLanguages();
 
-        pug.renderFile(
-            path.join(__dirname, '../views/', pathFile + '.pug'),
-            options,
-            function (err, data) {
-                if (!err) return response.send(data);
+        options = translator.translate(request.cookies['lang'] || 'us', options);
 
-                response.sendStatus(500);
-                return log.err(err);
+
+        if (request.cookies.token)
+            return api.getMyProfile(request.cookies.token, (err, res, body) => {
+                options.username = body.username;
+                pug.renderFile(
+                    path.join(__dirname, '../views/', pathFile + '.pug'),
+                    options,
+                    function (err, data) {
+                        if (!err) return response.send(data);
+
+                        response.sendStatus(500);
+                        return log.err(err);
+                    });
             });
+        else {
+            options.isProfile = false;
+            pug.renderFile(
+                path.join(__dirname, '../views/', pathFile + '.pug'),
+                options,
+                function (err, data) {
+                    if (!err) return response.send(data);
+
+                    response.sendStatus(500);
+                    return log.err(err);
+                });
+        }
     };
     next();
 }
