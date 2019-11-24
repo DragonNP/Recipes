@@ -1,51 +1,62 @@
 extends ../layouts/default_layout
 
 block content
-
     //- Plugins css
     link(href="assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css")
     link(href="assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css")
     link(href="assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css")
 
-    form(action='/addRecipe', method='post')
-        br
-        label #{name}
-        br
-        input(type='text', name='name' required)
-        br
-        label #{description}
-        br
-        <div id="snow-editor" style="height: 300px;">
-            h3
-                span(class="ql-size-large") Hello World!
-            p <br>
-            h3 This is an simple editable area.
-            p <br>
-            ul
-                li Select a text to reveal the toolbar.
-                li Edit rich document on-the-fly, so elastic!
-            p <br>
-            p End of simple area
-        //- end Snow-editor
-        br
-        label #{ingredients}
-        br
-        div(id='ingredients')
-        input(type='hidden' value=0 name='numberIngredients')
-        input(type='button' value='Add' onclick="addIngredient()")
-        br
-        label #{instruction}
-        br
-        input(type='text', name='instruction' required)
-        br
-        label #{image}
-        br
-        input(type='text', name='img_path')
-        br
-        input(type='submit', value=addRecipe)
-        br
-        a(href='/newRecipes'): button(type="button") #{home}
+    .row
+        .col-lg-12
+            .card
+                .card-body
+                    form(action='/addRecipe' class="parsley-form" method='post')
+                        .form-group
+                            label(for="name") #{name}
+                                span(class="text-danger") *
+                            input(type="text" name="name" parsley-trigger="change" required placeholder="Enter name recipe" class="form-control" id="name")
 
-        //- Plugins js
-        script(src="assets/libs/katex/katex.min.js")
-        script(src="assets/libs/quill/quill.min.js")
+                        .form-group
+                            label(for="description") #{description}
+                            input(type="text" name="description" parsley-trigger="change" placeholder="Enter description" class="form-control" id="description")
+
+                        .form-group
+                            label(for="ingredients") #{ingredients}
+                                span(class="text-danger") *
+                            #ingredients
+                            input(type='hidden' value=0 name='numberIngredients')
+                            button(type="button" class="btn btn-success waves-effect waves-light btn-sm" onclick="addIngredient()")
+                                i(class="mdi mdi-plus-circle")
+
+                        .form-group
+                            label(for="instruction") #{instruction}
+                                span(class="text-danger") *
+                            div(id="snow-editor" style="height: 300px;")
+                            input(type='hidden' name='instruction' id='instruction')
+
+                        .form-group
+                            label(for="img_path") #{image}
+                            input(type="text" name="name" parsley-trigger="change" placeholder="Enter name recipe" class="form-control" id="img_path")
+
+                        div(class="form-group text-left mb-0")
+                            button(class="btn btn-primary waves-effect waves-light mr-1" type="submit") #{addRecipe}
+                            button(type="reset" class="btn btn-secondary waves-effect waves-light"): a(href='/newRecipes') #{home}
+
+
+    //- Vendor js
+    script(src="assets/js/vendor.min.js")
+
+    //- Validation js (Parsleyjs)
+    script(src="assets/libs/parsleyjs/parsley.min.js")
+
+    //- validation init
+    script(src="assets/js/pages/form-validation.init.js")
+
+     //- Plugins js
+     script(src="assets/libs/katex/katex.min.js")
+     script(src="assets/libs/quill/quill.min.js")
+     script(src="assets/js/pages/form-quilljs.init.js")
+     script(src="assets/js/pages/addRecipe.js")
+
+     //- App js
+     script(src="assets/js/app.min.js")
