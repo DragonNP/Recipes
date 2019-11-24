@@ -1,17 +1,10 @@
 extends ../layouts/default_layout
+block content
+    //- Plugins css
+    link(href="assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css")
+    link(href="assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css")
+    link(href="assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css")
 
-block content
-    - let items = recipe || ''
-    h1 #{title}
-    table
-        tr
-            th #{dateAdded}
-            th #{author}
-        tr
-            td #{items.date}
-            td #{authorName}
-            
-block content
     div(class='row')
         div(class='col-lg-6')
             div(class='card')
@@ -25,7 +18,9 @@ block content
                     li(class='list-group-item')
                         span Ingredients: #{recipe.ingredients}
                     li(class='list-group-item')
-                        span #{instruction}: #{recipe.instruction}
+                        div(id="bubble-editor")
+                            div(class="ql-editor" data-gramm="false" contenteditable="false")
+                                p !{recipe.instruction}
                     li(class='list-group-item')
                         span #{author}: #{authorName}
                     li(class='list-group-item')
