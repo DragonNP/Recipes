@@ -28,6 +28,8 @@ function initProject(app) {
 }
 
 function responseCustom(request, response, next) {
+    log.info('utilities: called responseCustom method');
+
     response.sendPugFile = (pathFile, options) => {
         options = options || {};
 

@@ -128,7 +128,6 @@ async function getAddRecipe(request, response, next) {
     log.info('recipesController: called getCreateRecipe method');
     response.sendPugFile('recipesPages/addRecipe', {
         title: 'Add Recipe',
-
         name: 'Name',
         description: 'Description',
         ingredients: 'Ingredients',
@@ -142,12 +141,12 @@ async function getAddRecipe(request, response, next) {
 async function postCreateRecipe(request, response, next) {
     const body = request.body;
     body.token = request.cookies['token'];
-
-    // api.addRecipe(body, (err, res, body) => {
-    //     if (err || body.message) {
-    //         error_options.error = err || body.message;
-    //         return response.sendPugFile(__dirname, 'error', error_options);
-    //     }
-    //     response.redirect('/recipe?id='.concat(body.id));
-    // });
+    log.debug(body);
+    api.addRecipe(body, (err, res, body) => {
+        if (err || body.message) {
+            error_options.error = err || body.message;
+            return response.sendPugFile(__dirname, 'error', error_options);
+        }
+        response.redirect('/recipe?id='.concat(body.id));
+    });
 }

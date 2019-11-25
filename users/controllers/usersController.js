@@ -29,7 +29,7 @@ async function getRegistration(request, response, next) {
             email: 'Email',
             password: 'Password',
             signUp: 'Sign Up',
-            orYouHaveAccount: 'Or you have account'
+            doYouHaveAnAccount: 'Do you have an account'
         });
 }
 
@@ -41,7 +41,7 @@ async function getLogin(request, response, next) {
         email: 'Email',
         password: 'Password',
         signIn: 'Sign In',
-        orYouNotHaveAccount: 'Or you not have account',
+        youDoNotHaveAnAccount: 'You do not have an account'
     });
 }
 

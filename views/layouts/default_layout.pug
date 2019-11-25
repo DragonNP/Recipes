@@ -8,10 +8,12 @@ html
         meta(content='This is site for you recipes' name='description')
         meta(content='DragonNP' name='author')
         meta(http-equiv='X-UA-Compatible' content='IE=edge')
-
         //- App favicon
         link(rel='shortcut icon' href='assets/images/favicon.ico')
-        
+
+        //- Plugins css
+        block plugins-css
+
         //- App css
         link(href='assets/css/bootstrap.min.css' rel='stylesheet' type='text/css')
         link(href='assets/css/icons.min.css' rel='stylesheet' type='text/css')
@@ -233,3 +235,6 @@ html
                     div(class="col-md-6")
                         span 2019 - 2019 &copy; Recipes by <a href="#">DragonNP</a>
         //- end Footer
+
+        //- Plugins js
+        block plugins-js

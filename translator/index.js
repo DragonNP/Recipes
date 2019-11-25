@@ -32,11 +32,13 @@ const translateWords = {
       'You are not authorized': 'Вы не авторизованны',
       'Sign Up': 'Зарегистроваться',
       'Sign In': 'Войти',
+      'You do not have an account': 'У вас нет учетной записи',
+      'Do you have an account': 'У вас есть учётная запись'
   }
 };
 
 const languages = {
-    'ru': 'Russian',
+    'ru': 'Русский',
     'us': 'English'
 };
 

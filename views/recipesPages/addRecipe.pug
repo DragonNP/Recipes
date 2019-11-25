@@ -1,62 +1,61 @@
 extends ../layouts/default_layout
+block plugins-css
+    link(href='assets/libs/quill/quill.core.css' rel='stylesheet' type='text/css')
+    link(href='assets/libs/quill/quill.bubble.css' rel='stylesheet' type='text/css')
+    link(href='assets/libs/quill/quill.snow.css' rel='stylesheet' type='text/css')
 
 block content
-    //- Plugins css
-    link(href="assets/libs/quill/quill.core.css" rel="stylesheet" type="text/css")
-    link(href="assets/libs/quill/quill.bubble.css" rel="stylesheet" type="text/css")
-    link(href="assets/libs/quill/quill.snow.css" rel="stylesheet" type="text/css")
-
     .row
         .col-lg-12
             .card
                 .card-body
-                    form(action='/addRecipe' class="parsley-form" method='post')
+                    form(action='/addRecipe' class='parsley-form' method='post')
                         .form-group
-                            label(for="name") #{name}
-                                span(class="text-danger") *
-                            input(type="text" name="name" parsley-trigger="change" required placeholder="Enter name recipe" class="form-control" id="name")
+                            label(for='name') #{name}
+                                span(class='text-danger') *
+                            input(type='text' name='name' parsley-trigger='change' required placeholder='Enter name recipe' class='form-control' id='name')
 
                         .form-group
-                            label(for="description") #{description}
-                            input(type="text" name="description" parsley-trigger="change" placeholder="Enter description" class="form-control" id="description")
+                            label(for='description') #{description}
+                            input(type='text' name='description' parsley-trigger='change' placeholder='Enter description' class='form-control' id='description')
 
                         .form-group
-                            label(for="ingredients") #{ingredients}
-                                span(class="text-danger") *
+                            label(for='ingredients') #{ingredients}
+                                span(class='text-danger') *
                             #ingredients
                             input(type='hidden' value=0 name='numberIngredients')
-                            button(type="button" class="btn btn-success waves-effect waves-light btn-sm" onclick="addIngredient()")
-                                i(class="mdi mdi-plus-circle")
+                            button(type='button' class='btn btn-success waves-effect waves-light btn-sm' onclick='addIngredient()')
+                                i(class='mdi mdi-plus-circle')
 
                         .form-group
-                            label(for="instruction") #{instruction}
-                                span(class="text-danger") *
-                            div(id="snow-editor" style="height: 300px;")
+                            label(for='instruction') #{instruction}
+                                span(class='text-danger') *
+                            div(id='snow-editor' style='height: 300px;')
                             input(type='hidden' name='instruction' id='instruction')
 
                         .form-group
-                            label(for="img_path") #{image}
-                            input(type="text" name="name" parsley-trigger="change" placeholder="Enter name recipe" class="form-control" id="img_path")
+                            label(for='img_path') #{image}
+                            input(type='text' name='img_path' parsley-trigger='change' placeholder='Enter path image' class='form-control' id='img_path')
 
-                        div(class="form-group text-left mb-0")
-                            button(class="btn btn-primary waves-effect waves-light mr-1" type="submit") #{addRecipe}
-                            button(type="reset" class="btn btn-secondary waves-effect waves-light"): a(href='/newRecipes') #{home}
+                        div(class='form-group text-left mb-0')
+                            button(class='btn btn-primary waves-effect waves-light mr-1' onclick='document.getElementById("instruction").value=document.getElementsByClassName("ql-editor")[0].innerHTML;' type='submit' ) #{addRecipe}
+                            button(type='reset' class='btn btn-secondary waves-effect waves-light'): a(href='/newRecipes') #{home}
 
-
+block plugins-js
     //- Vendor js
-    script(src="assets/js/vendor.min.js")
+    script(src='assets/js/vendor.min.js')
 
     //- Validation js (Parsleyjs)
-    script(src="assets/libs/parsleyjs/parsley.min.js")
+    script(src='assets/libs/parsleyjs/parsley.min.js')
 
     //- validation init
-    script(src="assets/js/pages/form-validation.init.js")
+    script(src='assets/js/pages/form-validation.init.js')
 
      //- Plugins js
-     script(src="assets/libs/katex/katex.min.js")
-     script(src="assets/libs/quill/quill.min.js")
-     script(src="assets/js/pages/form-quilljs.init.js")
-     script(src="assets/js/pages/addRecipe.js")
+     script(src='assets/libs/katex/katex.min.js')
+     script(src='assets/libs/quill/quill.min.js')
+     script(src='assets/js/pages/form-quilljs.init.js')
+     script(src='assets/js/pages/addRecipe.js')
 
      //- App js
-     script(src="assets/js/app.min.js")
+     script(src='assets/js/app.min.js')

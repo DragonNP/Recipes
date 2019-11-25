@@ -9,8 +9,10 @@ function addIngredient(){
 
     str += `<div class="col-lg-4"> <select name="unit_${i}" parsley-trigger="change" required class="form-control">`;
     str += '<option disabled>Select the unit of measure</option>';
-    str += '<option selected value="gr">gr</option>';
-    str += '<option value="ml">ml</option>';
+    str += '<option selected value="piece">piece</option>';
+    str += '<option value="gram">gram</option>';
+    str += '<option value="milliliter">milliliter</option>';
+    str += '<option value="liter">liter</option>';
     str += '<option value="cup">cup</option>';
     str += '<option value="teaspoon">teaspoon</option>';
     str += '<option value="teaspoon">tablespoon</option>';

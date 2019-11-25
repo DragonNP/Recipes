@@ -1,5 +1,4 @@
 const log = require('../../logger');
-const api = require('../../api');
 
 module.exports = {
     auth
