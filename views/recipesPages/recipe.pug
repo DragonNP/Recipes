@@ -15,19 +15,19 @@ block content
 
                 ul(class='list-group list-group-flush')
                     li(class='list-group-item')
-                        span Ingredients: #{recipe.ingredients}
+                        span #{ingredients}: #{recipe.ingredients}
                     li(class='list-group-item')
                         div(id='bubble-editor')
                             div(class='ql-editor' data-gramm='false' contenteditable='false')
                                 p !{recipe.instruction}
                     li(class='list-group-item')
-                        span #{author}: #{authorName}
-                    li(class='list-group-item')
-                        span #{dateAdded}: #{recipe.date}
+                        p #{author}: #{authorName}
+                        p #{dateAdded}: #{recipe.date}
 
                 .card-body
-                    a(href='/editRecipe?id='.concat(recipe._id) class='float-right btn btn-success waves-effect waves-light')
-                        span(class='mdi mdi-pencil')
+                    if isEdit
+                        a(href='/editRecipe?id='.concat(recipe._id) class='float-right btn btn-success waves-effect waves-light')
+                            span(class='mdi mdi-pencil')
 
 block plugins-js
     //- Vendor js

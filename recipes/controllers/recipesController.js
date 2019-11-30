@@ -83,6 +83,7 @@ async function getRecipe(request, response, next) {
                 error_options.error = body.message || err;
                 return response.sendPugFile('error', error_options);
             }
+
             response.sendPugFile('recipesPages/recipe', {
                 title: recipe.name,
                 image: 'Image',
@@ -94,6 +95,7 @@ async function getRecipe(request, response, next) {
                 author: 'Author',
                 authorName: body.username,
                 recipe: recipe,
+                isEdit: false
             })
         });
     });
@@ -132,9 +134,24 @@ async function getAddRecipe(request, response, next) {
         description: 'Description',
         ingredients: 'Ingredients',
         instruction: 'Instruction',
-        image: 'Image path (beta)',
+        image: 'Image',
         addRecipe: 'Add Recipe',
-        home: 'Home'
+        home: 'Home',
+
+        enter_name_recipe: 'Enter name recipe',
+        enter_description: 'Enter description',
+        enter_path_image: 'Enter path image',
+
+        enter_name_ingredient: 'Enter name ingredient',
+        enter_quantity: 'Enter quantity',
+        select_the_unit_of_measure: 'Select the unit of measure',
+        piece: 'piece',
+        gram: 'gram',
+        milliliter: 'milliliter',
+        liter: 'liter',
+        cup: 'cup',
+        teaspoon: 'teaspoon',
+        tablespoon: 'tablespoon',
     });
 }
 

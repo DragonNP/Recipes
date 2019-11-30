@@ -9,6 +9,8 @@ const translateWords = {
       'My Recipes': 'Мои Рецепты',
       'Add Recipe': 'Добавить рецепт',
       'Favorites': 'Избранное',
+      'Home': 'Домой',
+      'or': 'или',
 
       'Notification': 'Уведомления',
       'Clear All': 'Очистить всё',
@@ -33,7 +35,22 @@ const translateWords = {
       'Sign Up': 'Зарегистроваться',
       'Sign In': 'Войти',
       'You do not have an account': 'У вас нет учетной записи',
-      'Do you have an account': 'У вас есть учётная запись'
+      'Do you have an account': 'У вас есть учётная запись',
+
+      'Enter name recipe': 'Введите название рецепта',
+      'Enter description': 'Введите описание',
+      'Enter path image': 'Вставте ссылку с картонкой',
+
+      'Enter name ingredient': 'Введите название ингредиента',
+      'Enter quantity': 'Введите количество',
+      'Select the unit of measure': 'Выберите единицу измерения',
+      'piece': 'шт',
+      'gram': 'грам',
+      'milliliter': 'миллилитр',
+      'liter': 'литр',
+      'cup': 'кружка',
+      'teaspoon': 'чайная ложка',
+      'tablespoon': 'столовая ложка',
   }
 };
 

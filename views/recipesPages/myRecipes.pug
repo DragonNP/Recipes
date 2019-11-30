@@ -12,9 +12,11 @@ block content
 
                     ul(class='list-group list-group-flush')
                         li(class='list-group-item')
-                            span Ingredients: #{recipes[recipes.length - i].ingredients}
+                            span #{ingredients}:&nbsp;
+                                - for (let key in recipes[recipes.length - i].ingredients)
+                                    span #{recipes[recipes.length - i].ingredients[key][0]},&nbsp;
 
-                   .card-body
+                    .card-body
                         a(href='/recipe?id='.concat(recipes[recipes.length - i]._id) class='btn btn-primary') #{goTo}
                         a(href='/editRecipe?id='.concat(recipes[recipes.length - i]._id) class='float-right btn btn-success waves-effect waves-light')
                             span(class='mdi mdi-pencil')

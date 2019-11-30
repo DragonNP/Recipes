@@ -157,10 +157,15 @@ html
                                     a(href='/logout' class='dropdown-item notify-item')
                                         i(class='remixicon-logout-box-line')
                                         span #{logout}
+                        else
+                            li(class='dropdown d-sm-block')
+                                a(href='/login' class='btn') #{sign_in}
+                                span #{or}
+                                a(href='/registration' class='btn') #{sign_up}
                         //- End Profile
 
                     //- LOGO
-                    div(class='logo-box')
+                    //- div(class='logo-box')
                         a(href='#' class='logo text-center')
                             span(class='logo-lg')
                                 img(src='assets/images/logo-light.png' alt='' height='20')

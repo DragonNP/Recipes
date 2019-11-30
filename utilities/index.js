@@ -57,10 +57,9 @@ function responseCustom(request, response, next) {
         };
         options.langs = translator.getLanguages();
 
-        options = translator.translate(request.cookies['lang'] || 'us', options);
+        if (request.cookies.token) {
+            options = translator.translate(request.cookies['lang'] || 'us', options);
 
-
-        if (request.cookies.token)
             return api.getMyProfile(request.cookies.token, (err, res, body) => {
                 options.username = body.username;
                 pug.renderFile(
@@ -73,8 +72,14 @@ function responseCustom(request, response, next) {
                         return log.err(err);
                     });
             });
+        }
         else {
             options.isProfile = false;
+            options.sign_in = 'Sign In';
+            options.or = 'or';
+            options.sign_up = 'Sign Up';
+            options = translator.translate(request.cookies['lang'] || 'us', options);
+
             pug.renderFile(
                 path.join(__dirname, '../views/', pathFile + '.pug'),
                 options,
