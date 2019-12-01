@@ -37,8 +37,6 @@ async function getRegistration(request, response, next) {
             password: 'Password',
             enter_your_password: 'Enter your password',
 
-            sign_up: 'Sign Up',
-            sign_in: 'Sign In',
             already_have_account: 'Already have account'
         });
 }
@@ -56,8 +54,6 @@ async function getLogin(request, response, next) {
         enter_your_password: 'Enter your password',
 
         remember_me: 'Remember me',
-        sign_up: 'Sign Up',
-        sign_in: 'Sign In',
         dont_have_an_account: 'Don\'t have an account',
     });
 }
@@ -78,9 +74,6 @@ async function getMyProfile(request, response, next) {
             firstName: body.firstName,
             lastName: body.lastName,
             email: body.email,
-
-            edit: 'edit',
-            logout: 'logout'
         });
     });
 }

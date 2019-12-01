@@ -33,63 +33,63 @@ function responseCustom(request, response, next) {
     response.sendPugFile = (pathFile, options) => {
         options = options || {};
 
-        if (!options.title)
-            options.title = 'Recipes';
         options.isProfile = true;
-        options.welcome = 'Welcome';
-        options.edit = 'Edit';
-        options.settings = 'Settings';
-        options.logout = 'Logout';
+
+        options.search = 'Search';
 
         options.notification = 'Notification';
         options.clearAll = 'Clear All';
         options.noNotifications = 'No Notifications';
 
+        options.welcome = 'Welcome';
         options.myProfile = 'My Profile';
+        options.edit = 'Edit';
+        options.settings = 'Settings';
+        options.logout = 'Logout';
+
         options.newRecipes = 'New Recipes';
         options.myRecipes = 'My Recipes';
-        options.addRecipe = 'Add Recipe';
         options.favorites = 'Favorites';
+        options.addRecipe = 'Add Recipe';
 
-        options.currentLang = {
-            domain: request.cookies['lang'] || 'us',
-            name: translator.getNameLang(request.cookies['lang'] || 'us')
-        };
-        options.langs = translator.getLanguages();
+        options.sign_in = 'Sign In';
+        options.or = 'or';
+        options.sign_up = 'Sign Up';
+
+        translator.getLanguages(langs => {
+            options.langs = langs;
+            options.currentLang = {
+                domain: request.cookies['lang'] || 'us',
+                name: options.langs[request.cookies['lang'] || 'us']
+            };
+        });
 
         if (request.cookies.token && !request.url.includes('/login') && !request.url.includes('/registration')) {
-            options = translator.translate(request.cookies['lang'] || 'us', options);
-
-            return api.getMyProfile(request.cookies.token, (err, res, body) => {
-                options.username = body.username;
-                pug.renderFile(
-                    path.join(__dirname, '../views/', pathFile + '.pug'),
-                    options,
-                    function (err, data) {
-                        if (!err) return response.send(data);
-
-                        response.sendStatus(500);
-                        return log.err(err);
-                    });
+            translator.translate(request.cookies['lang'] || 'us', options, array => {
+                return api.getMyProfile(request.cookies.token, (err, res, body) => {
+                    array.username = body.username;
+                    renderFile(response, __dirname, pathFile, array);
+                });
             });
         }
         else {
             options.isProfile = false;
-            options.sign_in = 'Sign In';
-            options.or = 'or';
-            options.sign_up = 'Sign Up';
-            options = translator.translate(request.cookies['lang'] || 'us', options);
-
-            pug.renderFile(
-                path.join(__dirname, '../views/', pathFile + '.pug'),
-                options,
-                function (err, data) {
-                    if (!err) return response.send(data);
-
-                    response.sendStatus(500);
-                    return log.err(err);
-                });
+            translator.translate(request.cookies['lang'] || 'us', options, array => {
+                renderFile(response, __dirname, pathFile, array);
+            });
         }
     };
     next();
+}
+
+function renderFile(response, __dirname, pathFile, options) {
+    pug.renderFile(
+        path.join(__dirname, '../views/', pathFile + '.pug'),
+        options,
+        function (err, data) {
+            if (!err) return response.send(data);
+
+            response.sendStatus(500);
+            return log.err(err);
+        });
 }

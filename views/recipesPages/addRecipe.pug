@@ -39,8 +39,8 @@ block content
                             input(type='text' name='img_path' parsley-trigger='change' placeholder=enter_path_image class='form-control' id='img_path')
 
                         div(class='form-group text-left mb-0')
-                            button(class='btn btn-primary waves-effect waves-light mr-1' onclick='document.getElementById("instruction").value=document.getElementsByClassName("ql-editor")[0].innerHTML;' type='submit' ) #{addRecipe}
-                            button(class='btn btn-secondary waves-effect waves-light'): a(href='/newRecipes') #{home}
+                            button(class='btn btn-primary waves-effect waves-light mr-1' type='submit' onclick='document.getElementById("instruction").value=document.getElementsByClassName("ql-editor")[0].innerHTML;') #{addRecipe}
+                            button(class='btn btn-secondary waves-effect waves-light'): a(href='/') #{home}
 
 block plugins-js
     //- Vendor js || mobile menu
@@ -63,10 +63,10 @@ block plugins-js
             i = i + 1
             let str = `<div id="ingredient" class="row">`
 
-            str += `<div class="col-lg-4"> <input type="text" name="name_${i}" parsley-trigger="change" required placeholder="#{enter_name_ingredient}" class="form-control"/> </div>`
-            str += `<div class="col-lg-4"> <input type="number" name="value_${i}" parsley-trigger="change" required placeholder="#{enter_quantity}" min="1" class="form-control"/>  </div>`
+            str += `<div class="col-sm-4"> <input type="text" name="name_${i}" parsley-trigger="change" placeholder="#{enter_name_ingredient}" class="form-control" required/> </div>`
+            str += `<div class="col-sm-4"> <input type="number" step="any" name="value_${i}" parsley-trigger="change" placeholder="#{enter_quantity}" min="1" class="form-control" required/> </div>`
 
-            str += `<div class="col-lg-4"> <select name="unit_${i}" parsley-trigger="change" required class="form-control">`
+            str += `<div class="col-sm-4"> <select name="unit_${i}" parsley-trigger="change" class="form-control" required>`
             str += `<option disabled>#{select_the_unit_of_measure}</option>`
             str += `<option selected value="piece">#{piece}</option>`
             str += `<option value="gram">#{gram}</option>`

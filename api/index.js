@@ -18,6 +18,12 @@ const url_users = {
     myProfile: `${uri}/users/myProfile`,
     users: `${uri}/users`
 };
+const url_lang = {
+    pack: `${uri}/lang/pack`,
+    addPack: `${uri}/lang/addPack`,
+    updatePack: `${uri}/lang/updatePack`,
+    names: `${uri}/lang/names`,
+};
 
 module.exports = {
     // Recipes
@@ -35,6 +41,10 @@ module.exports = {
     addUser,
     authenticateUser,
     updateUser,
+
+    // Lang
+    getPackLang,
+    getLangNames
 };
 
 // Recipes
@@ -217,6 +227,39 @@ function updateUser(token, updatedUser, fn) {
     const options = {
         method: 'POST',
         url: url_users.update,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+// Lang
+function getPackLang(lang, fn) {
+    log.info('api: called getPackLang method');
+
+    const json = {
+        lang: lang
+    };
+    const options = {
+        method: 'GET',
+        url: url_lang.pack,
+        form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function getLangNames(fn) {
+    log.info('api: called getLangsName method');
+
+    const json = {
+        name: 'language_names'
+    };
+    const options = {
+        method: 'GET',
+        url: url_lang.pack,
         form: json,
         json: true
     };

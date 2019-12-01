@@ -1,94 +1,24 @@
-module.exports.getNameLang = getNameLang;
+const api = require('../api');
+
 module.exports.translate = translate;
 module.exports.getLanguages = getLanguages;
 
-const translateWords = {
-  ru: {
-      'Registration': 'Регистрация',
-      'Login': 'Вход',
+function translate(lang, array, fn) {
+    api.getPackLang(lang, (err, res, body) => {
+        if(!array || body === null) return fn(array);
+        if(body.massage) return console.log(body.massage);
 
-      'My Profile': 'Мой Профиль',
-      'New Recipes': 'Новые рецепты',
-      'My Recipes': 'Мои Рецепты',
-      'Add Recipe': 'Добавить рецепт',
-      'Favorites': 'Избранное',
-      'Home': 'Домой',
-      'or': 'или',
+        for (let key in array)
+            array[key] = body[array[key]] || array[key];
 
-      'Notification': 'Уведомления',
-      'Clear All': 'Очистить всё',
-      'No Notifications': 'Нету уведомлений',
-
-      'Welcome': 'Добро Пожаловать',
-      'Edit': 'Изменить',
-      'Settings': 'Настройки',
-      'Logout': 'Выйти',
-
-      'Image': 'Изображение',
-      'Name': 'Название',
-      'Description': 'Описание',
-      'Ingredients': 'Ингредиенты',
-      'Go To': 'Перейти',
-      'Instruction': 'Инструкция',
-      'Date Added': 'Дата добавления',
-      'Author': 'Автор',
-
-      'Error': 'Ошибка',
-      'You are not authorized': 'Вы не авторизованны',
-      'Sign Up': 'Зарегистроваться',
-      'Sign In': 'Войти',
-      'You do not have an account': 'У вас нет учетной записи',
-      'Do you have an account': 'У вас есть учётная запись',
-
-      'Enter name recipe': 'Введите название рецепта',
-      'Enter description': 'Введите описание',
-      'Enter path image': 'Вставте ссылку с картонкой',
-
-      'Enter name ingredient': 'Введите название ингредиента',
-      'Enter quantity': 'Введите количество',
-      'Select the unit of measure': 'Выберите единицу измерения',
-      'piece': 'шт',
-      'gram': 'грам',
-      'milliliter': 'миллилитр',
-      'liter': 'литр',
-      'cup': 'кружка',
-      'teaspoon': 'чайная ложка',
-      'tablespoon': 'столовая ложка',
-
-      'Username': 'Имя пользователя',
-      'Password': 'Пароль',
-      'Email': 'Электронная почта',
-      'Don\'t have an account': 'У вас нет учетной записи',
-      'Create your own account, it takes less than a minute': 'Создайте свой аккаунт, это займет не более минуты',
-      'Enter username': 'Введите имя пользователя',
-      'Enter your email': 'Введите свой адрес электронной почты',
-      'Enter your password': 'Введите пароль',
-      'Already have account': 'Уже есть аккаунт',
-      'Remember me': 'Запомнить меня'
-  }
-};
-
-const languages = {
-    'ru': 'Русский',
-    'us': 'English'
-};
-
-function getNameLang(domain) {
-    return languages[domain];
+        fn(array);
+    });
 }
 
-function translate(lang, array) {
-    if (!array) return;
-
-    const wordsTranslate = translateWords[lang];
-    if(wordsTranslate === undefined) return array;
-
-    for (let key in array) {
-        array[key] = wordsTranslate[array[key]] || array[key];
-    }
-    return array;
-}
-
-function getLanguages() {
-    return languages;
+function getLanguages(fn) {
+    api.getLangNames((err, res, body) => {
+        delete body._id;
+        delete body.name;
+        fn(body);
+    });
 }
