@@ -16,6 +16,7 @@ function auth(request, response, next) {
         url === '/registration' ||
         url === '/login' ||
         url === '/newRecipes' ||
+        url === '/logout' ||
         url.includes('/recipe') ||
         url.includes('/setLanguage')) {
         return next();

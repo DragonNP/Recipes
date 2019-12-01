@@ -57,7 +57,7 @@ function responseCustom(request, response, next) {
         };
         options.langs = translator.getLanguages();
 
-        if (request.cookies.token) {
+        if (request.cookies.token && !request.url.includes('/login') && !request.url.includes('/registration')) {
             options = translator.translate(request.cookies['lang'] || 'us', options);
 
             return api.getMyProfile(request.cookies.token, (err, res, body) => {

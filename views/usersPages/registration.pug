@@ -1,19 +1,33 @@
-extends ../layouts/default_layout
-block content
-    form(action='/registration', method='post')
-        br
-        label #{username}
-        br
-        input(type='text' name='username' required)
-        br
-        label #{email}
-        br
-        input(type='email' name='email' required)
-        br
-        label #{password}
-        br
-        input(type='password' name='password' required)
-        br
-        input(type='submit' value=signUp)
-        br
-        a(href='/login'): button(type='button') #{doYouHaveAnAccount}?
+extends ../layouts/auth_layout
+
+block upper-block
+    p(class='text-muted') #{dont_have_an_account}? #{create_your_own_account_it_takes_less_than_a_minute}
+
+block form
+    form(action='/registration' class='parsley-form' method='post')
+
+        .form-group
+            label(for='username') #{username}
+            input(class='form-control' type='text' name='username' id='username' placeholder=enter_username required)
+
+        .form-group
+            label(for='email') #{email}
+            input(class='form-control' type='email' name='email' id='email' placeholder=enter_your_email required)
+
+        .form-group
+            label(for='password') #{password}
+            input(class='form-control' type='password' name='password' id='password' placeholder=enter_your_password required)
+
+        //-
+            .form-group
+                div(class='custom-control custom-checkbox')
+                    input(type='checkbox'(class='custom-control-input' id='checkbox-signup')
+                        label(class='custom-control-label' for='checkbox-signup') I accept
+                            a(href='#'(class='text-dark') Terms and Conditions
+
+        div(class='form-group mb-0 text-center')
+            button(class='btn btn-primary btn-block' type='submit') #{sign_up}
+
+block lower-block
+    p(class='text-muted') #{already_have_account}?
+        a(href='/login' class='text-muted font-weight-medium ml-1') #{sign_in}

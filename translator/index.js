@@ -4,6 +4,9 @@ module.exports.getLanguages = getLanguages;
 
 const translateWords = {
   ru: {
+      'Registration': 'Регистрация',
+      'Login': 'Вход',
+
       'My Profile': 'Мой Профиль',
       'New Recipes': 'Новые рецепты',
       'My Recipes': 'Мои Рецепты',
@@ -51,6 +54,17 @@ const translateWords = {
       'cup': 'кружка',
       'teaspoon': 'чайная ложка',
       'tablespoon': 'столовая ложка',
+
+      'Username': 'Имя пользователя',
+      'Password': 'Пароль',
+      'Email': 'Электронная почта',
+      'Don\'t have an account': 'У вас нет учетной записи',
+      'Create your own account, it takes less than a minute': 'Создайте свой аккаунт, это займет не более минуты',
+      'Enter username': 'Введите имя пользователя',
+      'Enter your email': 'Введите свой адрес электронной почты',
+      'Enter your password': 'Введите пароль',
+      'Already have account': 'Уже есть аккаунт',
+      'Remember me': 'Запомнить меня'
   }
 };
 

@@ -1,15 +1,18 @@
-extends ../layouts/default_layout
-block content
-    form(action='/login', method='post')
-        br
-        label #{email}
-        br
-        input(type='email', name='email' required)
-        br
-        label #{password}
-        br
-        input(type='password', name='password' required)
-        br
-        input(type='submit', value=signIn)
-        br
-        a(href='/registration'): button(type='button') #{youDoNotHaveAnAccount}?
+extends ../layouts/auth_layout
+    
+block form
+    form(action='/login' class='parsley-form' method='post')
+        div(class='form-group mb-3')
+            label(for='email') #{email}
+            input(class='form-control' type='email' name='email' id='email' placeholder=enter_your_email required)
+    
+        div(class='form-group mb-3')
+            label(for='password') #{password}
+            input(class='form-control' type='password' name='password' id='password' placeholder=enter_your_password required)
+    
+        div(class='form-group mb-0 text-center')
+            button(class='btn btn-primary btn-block' type='submit') #{sign_in}
+            
+block lower-block
+    p(class='text-muted') #{dont_have_an_account}?
+        a(href='/registration' class='text-primary font-weight-medium ml-1') #{sign_up}
