@@ -26,8 +26,10 @@ block content
 
                 .card-body
                     if isEdit
-                        a(href='/editRecipe?id='.concat(recipe._id) class='float-right btn btn-success waves-effect waves-light')
+                        a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
                             span(class='mdi mdi-pencil')
+                    a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                        span(class='remixicon-star-line')
 
 block plugins-js
     //- Vendor js

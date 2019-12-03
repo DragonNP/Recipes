@@ -78,25 +78,26 @@ async function getRecipe(request, response, next) {
         }
 
         const recipe = body;
-        api.getUserById(body.account_id, (err, res, body) => {
-            if (err || body.message) {
-                error_options.error = body.message || err;
-                return response.sendPugFile('error', error_options);
-            }
+        const options = {
+            title: recipe.name,
+            image: 'Image',
+            name: 'Name',
+            description: 'Description',
+            ingredients: 'Ingredients',
+            instruction: 'Instruction',
+            dateAdded: 'Date Added',
+            author: 'Author',
+            recipe: recipe,
+            isEdit: body._id === response.myId
+        };
 
-            response.sendPugFile('recipesPages/recipe', {
-                title: recipe.name,
-                image: 'Image',
-                name: 'Name',
-                description: 'Description',
-                ingredients: 'Ingredients',
-                instruction: 'Instruction',
-                dateAdded: 'Date Added',
-                author: 'Author',
-                authorName: body.username,
-                recipe: recipe,
-                isEdit: false
-            })
+        api.getUserById(body.account_id, (err, res, body) => {
+            if (err || body.message)
+                return response.sendPugFile('recipesPages/recipe', options);
+
+            options.authorName = body.username;
+            options.isEdit =  false;
+            response.sendPugFile('recipesPages/recipe', options)
         });
     });
 }

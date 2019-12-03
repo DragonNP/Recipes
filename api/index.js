@@ -19,7 +19,8 @@ const url_users = {
     users: `${uri}/users`
 };
 const url_lang = {
-    pack: `${uri}/lang/pack`,
+    byLang: `${uri}/lang/byLang`,
+    all: `${uri}/lang/all`,
     addPack: `${uri}/lang/addPack`,
     updatePack: `${uri}/lang/updatePack`,
     names: `${uri}/lang/names`,
@@ -44,7 +45,8 @@ module.exports = {
 
     // Lang
     getPackLang,
-    getLangNames
+    getLangNames,
+    updatePackLang
 };
 
 // Recipes
@@ -243,7 +245,7 @@ function getPackLang(lang, fn) {
     };
     const options = {
         method: 'GET',
-        url: url_lang.pack,
+        url: url_lang.byLang,
         form: json,
         json: true
     };
@@ -252,15 +254,30 @@ function getPackLang(lang, fn) {
 }
 
 function getLangNames(fn) {
-    log.info('api: called getLangsName method');
+    log.info('api: called getLangNames method');
 
     const json = {
         name: 'language_names'
     };
     const options = {
         method: 'GET',
-        url: url_lang.pack,
+        url: url_lang.all,
         form: json,
+        json: true
+    };
+
+    rp(options, fn);
+}
+
+function updatePackLang(lang, updatedPack, fn) {
+    log.info('api: called updatePackLang method');
+
+    updatedPack.lang = lang;
+
+    const options = {
+        method: 'POST',
+        url: url_users.update,
+        form: updatedPack,
         json: true
     };
 
