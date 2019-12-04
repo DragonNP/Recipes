@@ -1,35 +1,86 @@
 extends ../layouts/default_layout
 block plugins-css
+
+    style.
+
+        dl {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        dt {
+            margin-bottom: 10px;
+        }
+
+        dd {
+            position: relative;
+        }
+
+        dd span {
+            display: inline-block;
+            position: relative;
+        }
+
+        dd span:nth-child(1) {
+            padding: 0 8px 0 0;
+        }
+
+        dd span:nth-child(2) {
+            float: right;
+        }
+
+        dd span:nth-child(3) {
+            float: right;
+            padding: 0 0 0 8px;
+        }
+
     link(href='assets/libs/quill/quill.core.css' rel='stylesheet' type='text/css')
     link(href='assets/libs/quill/quill.bubble.css' rel='stylesheet' type='text/css')
     link(href='assets/libs/quill/quill.snow.css' rel='stylesheet' type='text/css')
 
 block content
-   .row
-        .col-lg-6
+    .row
+        .col-lg-12
             .card
-                img(class='card-img-top img-fluid' src=recipe.img_path)
                 .card-body
-                    h5(class='card-title') #{recipe.name}
-                    p(class='card-text') #{recipe.description}
-
-                ul(class='list-group list-group-flush')
-                    li(class='list-group-item')
-                        span #{ingredients}: #{recipe.ingredients}
-                    li(class='list-group-item')
-                        div(id='bubble-editor')
-                            div(class='ql-editor' data-gramm='false' contenteditable='false')
-                                p !{recipe.instruction}
-                    li(class='list-group-item')
-                        p #{author}: #{authorName}
-                        p #{dateAdded}: #{recipe.date}
-
-                .card-body
-                    if isEdit
-                        a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                            span(class='mdi mdi-pencil')
-                    a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                        span(class='remixicon-star-line')
+                    h2(class="header-title mb-3") #{recipe.name}
+                    .grid-structure
+                        .row
+                            .col-lg-4
+                                .grid-container
+                                    img(class='card-img-top img-fluid' src=recipe.img_path)
+                            .col-lg-4
+                                .grid-container
+                                    h3 #{ingredients}:
+                                    dl
+                                        - for(let i = 0; i < recipe.ingredients.length; i++)
+                                            dd
+                                                span #{recipe.ingredients[i][0]}
+                                                span #{recipe.ingredients[i][2]}
+                                                span #{recipe.ingredients[i][1]}
+                            .col-lg-4
+                                .grid-container
+                                    h3 #{description}
+                                    p(class='card-text') #{recipe.description}
+                        .row
+                            .col-lg-12
+                                .grid-container
+                                    h3 #{instruction}
+                                    div(id='bubble-editor')
+                                        div(class='ql-editor' data-gramm='false' contenteditable='false')
+                                            p !{recipe.instruction}
+                        .row
+                            .col-lg-12
+                                .grid-container
+                                    p #{author}: #{authorName}
+                                    p #{dateAdded}: #{recipe.date}
+                        .row
+                            .col-lg-12
+                                if true
+                                    a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                                        span(class='mdi mdi-pencil')
+                                a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                                    span(class='remixicon-star-line')
 
 block plugins-js
     //- Vendor js
