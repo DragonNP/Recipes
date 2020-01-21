@@ -36,48 +36,44 @@ function responseCustom(request, response, next) {
         options.isProfile = true;
 
         options.search = 'Search';
-
         options.notification = 'Notification';
         options.clearAll = 'Clear All';
         options.noNotifications = 'No Notifications';
-
         options.welcome = 'Welcome';
         options.myProfile = 'My Profile';
         options.edit = 'Edit';
         options.settings = 'Settings';
         options.logout = 'Logout';
-
         options.newRecipes = 'New Recipes';
         options.myRecipes = 'My Recipes';
         options.favorites = 'Favorites';
         options.addRecipe = 'Add Recipe';
-
         options.sign_in = 'Sign In';
         options.or = 'or';
         options.sign_up = 'Sign Up';
 
         translator.getLanguages(langs => {
+            const current_lang = request.cookies['lang'] || 'us';
             options.langs = langs;
             options.currentLang = {
                 domain: request.cookies['lang'] || 'us',
                 name: options.langs[request.cookies['lang'] || 'us']
             };
-        });
 
-        if (request.cookies.token && !request.url.includes('/login') && !request.url.includes('/registration')) {
-            translator.translate(request.cookies['lang'] || 'us', options, array => {
-                return api.getMyProfile(request.cookies.token, (err, res, body) => {
-                    array.username = body.username;
+            translator.translate(current_lang, options, array => {
+                if (request.cookies.token && !request.url.includes('/login') &&
+                    !request.url.includes('/registration')) {
+                    api.getMyProfile(request.cookies.token, (err, res, body) => {
+                        array.username = body.username;
+                        renderFile(response, __dirname, pathFile, array);
+                    });
+                }
+                else {
+                    options.isProfile = false;
                     renderFile(response, __dirname, pathFile, array);
-                });
+                }
             });
-        }
-        else {
-            options.isProfile = false;
-            translator.translate(request.cookies['lang'] || 'us', options, array => {
-                renderFile(response, __dirname, pathFile, array);
-            });
-        }
+        });
     };
     next();
 }
