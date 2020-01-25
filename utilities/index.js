@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const pug = require('pug');
 const path = require('path');
+const errorHandler = require('errorhandler');
 
 const translator = require('../translator');
 const recipes = require('../recipes');
@@ -13,22 +14,35 @@ const api = require('../api');
 module.exports.initProject = initProject;
 
 function initProject(app) {
-    log.setLevel('debug');
+    log.setLevel('info');
+    if (process.env.NODE_ENV === 'development') {
+        // only use in development
+        log.setLevel('debug');
+        app.use(errorHandler());
+    }
+    else {
+        app.use((err, req, res, next) => {
+            console.error(err);
+            res.status(500).send('Server Error');
+        });
+    }
+
 
     app.set('view engine', 'pug');
     app.use(bodyParser.urlencoded({ extended: false }));
+    app.use((req, res, next) => {log.info(req.method + ': ' + req.originalUrl); next()});
     app.use('/assets', express.static('assets'));
     app.use(cookieParser());
     app.use(responseCustom);
     app.use(users);
     app.use(recipes);
 
-    log.debug('initializing: set view engine:pug');
-    log.debug('initializing: use bodyParser, cookieParser, responseCustom, users, recipes, notFound');
+    log.debug('Initializing: set view engine:pug');
+    log.debug('Initializing: use bodyParser, assets, cookieParser, responseCustom, users, recipes');
 }
 
 function responseCustom(request, response, next) {
-    log.info('utilities: called responseCustom method');
+    log.debug('Utilities: called responseCustom method');
 
     response.sendPugFile = (pathFile, options) => {
         options = options || {};

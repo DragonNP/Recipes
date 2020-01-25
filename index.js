@@ -6,5 +6,5 @@ const app = express();
 utilities.initProject(app);
 
 app.listen(process.env.PORT || 8080, () => {
-    log.info('website is running')
+    log.info('App is running')
 });

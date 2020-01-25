@@ -18,7 +18,7 @@ module.exports = {
 };
 
 async function newRecipes(request, response, next) {
-    log.info('recipesController: called newRecipes method');
+    log.debug('RecipesController: called newRecipes method');
 
     api.getRecipes((err, res, body) => {
         if (err || body.message) {
@@ -40,7 +40,7 @@ async function newRecipes(request, response, next) {
 }
 
 async function myRecipes(request, response, next) {
-    log.info('recipesController: called myRecipes method');
+    log.debug('RecipesController: called myRecipes method');
 
     const cookies = request.cookies;
 
@@ -65,7 +65,7 @@ async function myRecipes(request, response, next) {
 }
 
 async function getRecipe(request, response, next) {
-    log.info('recipesController: called recipe method');
+    log.debug('RecipesController: called recipe method');
 
     const query = request.query;
     if(!query.id)
@@ -103,7 +103,7 @@ async function getRecipe(request, response, next) {
 }
 
 async function favorites(request, response, next) {
-    log.info('recipesController: called favourites method');
+    log.debug('RecipesController: called favourites method');
 
     const cookies = request.cookies;
 
@@ -128,7 +128,7 @@ async function favorites(request, response, next) {
 }
 
 async function getAddRecipe(request, response, next) {
-    log.info('recipesController: called getCreateRecipe method');
+    log.debug('RecipesController: called getCreateRecipe method');
     response.sendPugFile('recipesPages/addRecipe', {
         title: 'Add Recipe',
         name: 'Name',

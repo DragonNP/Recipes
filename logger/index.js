@@ -1,8 +1,6 @@
-require('colors');
+const chalk = require('chalk');
 
-let isDebug,
-    isInfo,
-    isErr;
+let isDebug, isInfo, isErr;
 
 module.exports = {
     setLevel,
@@ -36,18 +34,15 @@ function setLevel(level) {
 
 function debug(msg) {
     if (!isDebug) return;
-
-    console.log('[', 'DEBUG'.blue, ']', msg);
+    console.log(chalk.blue('✓') + ' ' + msg);
 }
 
 function info(msg) {
-    if (!isInfo) return '';
-
-    console.log('[ ', 'OK'.green, '  ]', msg);
+    if (!isInfo) return;
+    console.log(chalk.green('✓') + ' ' + msg);
 }
 
 function err(msg) {
     if (!isErr) return;
-
-    console.log('[', 'ERROR'.red, ']', new Error(msg).message);
+    console.log(chalk.red('✗') + ' ' + new Error(msg).message);
 }

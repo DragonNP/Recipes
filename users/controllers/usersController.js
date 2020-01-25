@@ -20,7 +20,7 @@ module.exports = {
 };
 
 async function getRegistration(request, response, next) {
-    log.info('userController: called getRegistration method');
+    log.debug('UserController: called getRegistration method');
 
     response.sendPugFile( 'usersPages/registration',
         {
@@ -42,7 +42,7 @@ async function getRegistration(request, response, next) {
 }
 
 async function getLogin(request, response, next) {
-    log.info('userController: called getLogin method');
+    log.debug('UserController: called getLogin method');
 
     response.sendPugFile('usersPages/login', {
         title: 'Login',
@@ -59,7 +59,7 @@ async function getLogin(request, response, next) {
 }
 
 async function getMyProfile(request, response, next) {
-    log.info('userController: called getMyProfile method');
+    log.info('UserController: called getMyProfile method');
 
     const cookies = request.cookies;
 
@@ -79,7 +79,7 @@ async function getMyProfile(request, response, next) {
 }
 
 async function logout(request, response, next) {
-    log.info('userController: called logout method');
+    log.debug('UserController: called logout method');
 
     response.clearCookie('token')
         .sendPugFile('usersPages/logout', {
@@ -88,14 +88,14 @@ async function logout(request, response, next) {
 }
 
 async function setLanguage(request, response, next) {
-    log.info('userController: called setLanguage method');
+    log.debug('UserController: called setLanguage method');
 
     response.cookie('lang', request.query.lang)
         .redirect('/');
 }
 
 async function postRegistration(request, response, next) {
-    log.info('userController: called postRegistration method');
+    log.debug('UserController: called postRegistration method');
 
     const body = request.body;
     const user  = {
@@ -116,7 +116,7 @@ async function postRegistration(request, response, next) {
 }
 
 async function postLogin(request, response, next) {
-    log.info('userController: called postLogin method');
+    log.debug('UserController: called postLogin method');
 
     const body = request.body;
 

@@ -1,14 +1,12 @@
 const express = require('express');
-const authorizationController = require('../controllers/authorizationController');
 const usersController = require('../controllers/usersController');
+const passportConfig = require('../../config/passport');
 
 const router = express.Router();
 
-router.use(authorizationController.auth);
-
 router.get('/registration', usersController.getRegistration);
 router.get('/login', usersController.getLogin);
-router.get('/myProfile', usersController.getMyProfile);
+router.get('/myProfile', passportConfig.isAuthenticated, usersController.getMyProfile);
 router.get('/logout', usersController.logout);
 router.get('/setLanguage', usersController.setLanguage);
 

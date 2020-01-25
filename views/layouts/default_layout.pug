@@ -123,15 +123,14 @@ html
                         //- End Notification
                         
                         //- Profile
-                        if isProfile
-                            li(class='dropdown notification-list')
+                        li(class='dropdown d-none d-lg-block')
+                            if isProfile
                                 a(class='nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light' data-toggle='dropdown' href='#' role='button' aria-haspopup='false' aria-expanded='false')
                                     span(class='pro-user-name ml-1')
                                         span #{username}
                                         i(class='mdi mdi-chevron-down')
 
                                 div(class='dropdown-menu dropdown-menu-right profile-dropdown ')
-
                                     //- item
                                     div(class='dropdown-header noti-title')
                                         h6(class='text-overflow m-0') #{welcome}!
@@ -149,7 +148,7 @@ html
                                     //- item
                                     a(href='#' class='dropdown-item notify-item')
                                         i(class='remixicon-settings-3-line')
-                                        span #{settings}
+                                        pan #{settings}
 
                                     div(class='dropdown-divider')
 
@@ -157,11 +156,9 @@ html
                                     a(href='/logout' class='dropdown-item notify-item')
                                         i(class='remixicon-logout-box-line')
                                         span #{logout}
-                        else
-                            li(class='dropdown d-sm-block')
-                                a(href='/login' class='btn') #{sign_in}
-                                span #{or}
-                                a(href='/registration' class='btn') #{sign_up}
+                            else
+                                a(class='nav-link dropdown-toggle nav-user mr-0' role='button' href='/login')
+                                    span(class='pro-user-name ml-1 btn btn-secondary waves-effect') #{sign_in}
                         //- End Profile
 
                     //- LOGO
@@ -183,7 +180,6 @@ html
                     div(id='navigation')
                         //- Navigation Menu
                         ul(class='navigation-menu')
-
                             li(class='has-submenu')
                                 a(href='/newRecipes')
                                     i(class='ti-receipt')
@@ -222,7 +218,7 @@ html
                 div(class="row")
                     div(class="col-5")
                         div(class="page-title-box")
-                            h4(class="page-title") #{title}
+                            h4(class='page-title') #{title}
                 //- end page title
 
                 //- start content

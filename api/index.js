@@ -51,7 +51,7 @@ module.exports = {
 
 // Recipes
 function getMyRecipes(token, fn) {
-    log.info('api: called getMyRecipes method');
+    log.debug('API: called getMyRecipes method');
 
     const json = {
         token: token
@@ -67,7 +67,7 @@ function getMyRecipes(token, fn) {
 }
 
 function getRecipes(fn) {
-    log.info('api: called getRecipes method');
+    log.debug('API: called getRecipes method');
 
     const options = {
       method: 'GET',
@@ -79,7 +79,7 @@ function getRecipes(fn) {
 }
 
 function getRecipeById(id, fn) {
-    log.info('api: called getRecipesById method');
+    log.debug('API: called getRecipesById method');
 
     const json = {
         id: id
@@ -95,7 +95,7 @@ function getRecipeById(id, fn) {
 }
 
 function getRecipesByAccountId(id, fn) {
-    log.info('api: called getRecipesByAccountId method');
+    log.debug('API: called getRecipesByAccountId method');
 
     const json = {
         account_id: id
@@ -111,7 +111,7 @@ function getRecipesByAccountId(id, fn) {
 }
 
 function addRecipe(recipe, fn) {
-    log.info('api: called addRecipe method');
+    log.debug('API: called addRecipe method');
 
     const options = {
         method: 'POST',
@@ -124,7 +124,7 @@ function addRecipe(recipe, fn) {
 }
 
 function addFavourites(token, id, fn) {
-    log.info('api: called addFavourites method');
+    log.debug('API: called addFavourites method');
 
     const json = {
         token: token,
@@ -141,7 +141,7 @@ function addFavourites(token, id, fn) {
 }
 
 function deleteRecipe(token, id, fn) {
-    log.info('api: called deleteRecipe method');
+    log.debug('API: called deleteRecipe method');
 
     const json = {
         token: token,
@@ -160,7 +160,7 @@ function deleteRecipe(token, id, fn) {
 
 // Users
 function getMyProfile(token, fn) {
-    log.info('api: called getMyProfile method');
+    log.debug('API: called getMyProfile method');
 
     const json = {
         token: token
@@ -176,7 +176,7 @@ function getMyProfile(token, fn) {
 }
 
 function getUserById(id, fn) {
-    log.info('api: called getUserById method');
+    log.debug('API: called getUserById method');
 
     const json = {
         id: id
@@ -192,8 +192,7 @@ function getUserById(id, fn) {
 }
 
 function addUser(user, fn) {
-    log.info('api: called addUser method');
-    log.debug(user);
+    log.debug('API: called addUser method');
     const options = {
         method: 'POST',
         url: url_users.registration,
@@ -205,7 +204,7 @@ function addUser(user, fn) {
 }
 
 function authenticateUser(email, password, fn) {
-    log.info('api: called authenticateUser method');
+    log.debug('API: called authenticateUser method');
 
     const json = {
         email: email,
@@ -222,7 +221,7 @@ function authenticateUser(email, password, fn) {
 }
 
 function updateUser(token, updatedUser, fn) {
-    log.info('api: called updateUser method');
+    log.debug('API: called updateUser method');
 
     const json = updatedUser;
     json.token = token;
@@ -238,7 +237,7 @@ function updateUser(token, updatedUser, fn) {
 
 // Lang
 function getPackLang(lang, fn) {
-    log.info('api: called getPackLang method');
+    log.debug('API: called getPackLang method');
 
     const json = {
         lang: lang
@@ -254,7 +253,7 @@ function getPackLang(lang, fn) {
 }
 
 function getLangNames(fn) {
-    log.info('api: called getLangNames method');
+    log.debug('API: called getLangNames method');
 
     const json = {
         name: 'language_names'
@@ -270,7 +269,7 @@ function getLangNames(fn) {
 }
 
 function updatePackLang(lang, updatedPack, fn) {
-    log.info('api: called updatePackLang method');
+    log.debug('API: called updatePackLang method');
 
     updatedPack.lang = lang;
 
