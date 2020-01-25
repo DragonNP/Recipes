@@ -10,6 +10,7 @@ const recipes = require('../recipes');
 const users = require('../users');
 const log = require('../logger');
 const api = require('../api');
+const errors = require('../errors');
 
 module.exports.initProject = initProject;
 
@@ -36,6 +37,7 @@ function initProject(app) {
     app.use(responseCustom);
     app.use(users);
     app.use(recipes);
+    app.use(errors);
 
     log.debug('Initializing: set view engine:pug');
     log.debug('Initializing: use bodyParser, assets, cookieParser, responseCustom, users, recipes');

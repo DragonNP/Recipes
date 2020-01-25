@@ -1,0 +1,9 @@
+extends ../layouts/error_layout
+block content
+    div(class='error-ghost text-center')
+        img(src='assets/images/error.svg' width='200' alt='error-image')
+    .text-center
+        h3(class='mt-4 text-uppercase font-weight-bold') #{page_not_found}
+        p(class='text-muted mb-0 mt-3' style='line-height: 20px;') #{text404}.
+        a(class='btn btn-primary mt-3' href='/')
+            i(class='mdi mdi-reply mr-1') #{back_to_home}

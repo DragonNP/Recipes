@@ -84,6 +84,9 @@ async function logout(request, response, next) {
     response.clearCookie('token')
         .sendPugFile('usersPages/logout', {
         title: 'logout',
+        back_to_home: 'Back to Home',
+        see_you_again: 'See you again',
+        you_are_now_successfully_sign_out: 'You are now successfully sign out'
     });
 }
 
