@@ -68,7 +68,7 @@ async function getRecipe(request, response, next) {
     log.debug('RecipesController: called recipe method');
 
     const query = request.query;
-    if(!query.id)
+    if (!query.id)
         return response.redirect('/newRecipes');
 
     api.getRecipeById(query.id, (err, res, body) => {
@@ -88,16 +88,22 @@ async function getRecipe(request, response, next) {
             dateAdded: 'Date Added',
             author: 'Author',
             recipe: recipe,
-            isEdit: body._id === response.myId
+            isEdit: false
         };
 
         api.getUserById(body.account_id, (err, res, body) => {
-            if (err || body.message)
+            if (err || body.message) {
+                log.err(err);
                 return response.sendPugFile('recipesPages/recipe', options);
+            }
 
             options.authorName = body.username;
-            options.isEdit =  false;
-            response.sendPugFile('recipesPages/recipe', options)
+            api.getMyProfile(request.cookies.token || '', (err, res, body) => {
+                if (err || body.message) log.err(err);
+                if (options.authorName === body.username)
+                    options.isEdit = true;
+                response.sendPugFile('recipesPages/recipe', options)
+            });
         });
     });
 }

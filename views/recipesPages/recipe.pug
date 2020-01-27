@@ -38,45 +38,40 @@ block plugins-css
 
 block content
     .row
-        .col-lg-12
-            .card
-                .card-body
-                    .grid-structure
-                        .row
-                            .col-lg-4
-                                img(class='card-img-top img-fluid' src=recipe.img_path)
-                            .col-lg-4
-                                .grid-container
-                                    h3 #{ingredients}:
-                                    dl
-                                        - for(let i = 0; i < recipe.ingredients.length; i++)
-                                            dd
-                                                span #{recipe.ingredients[i][0]}
-                                                span #{recipe.ingredients[i][2]}
-                                                span #{recipe.ingredients[i][1]}
-                            .col-lg-4
-                                .grid-container
-                                    h3 #{description}
-                                    p(class='card-text') #{recipe.description}
-                        .row
-                            .col-lg-12
-                                h3 #{instruction}
-                                div(id='bubble-editor')
-                                    div(class='ql-editor' data-gramm='false' contenteditable='false')
-                                        p !{recipe.instruction}
-                        .row
-                            .col-lg-12
-                                span #{author}: #{authorName}<br>
-                                span #{dateAdded}: #{recipe.date}
-                        .row
-                            .col-lg-12
-                                br
-                                if true
-                                    a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                                        span(class='mdi mdi-pencil')
-                                    span &#8194;
-                                a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                                    span(class='remixicon-star-line')
+        .col-12
+            .card-columns
+                .card
+                    img(class='card-img-top img-fluid' src=recipe.img_path alt=title)
+                    .card-body
+                        h5(class='card-title') #{description}
+                        p(class='card-text') #{recipe.description}
+                div(class='card card-body')
+                    h5(class='card-title') #{ingredients}:
+                    dl
+                        - for(let i = 0; i < recipe.ingredients.length; i++)
+                            dd
+                                span #{recipe.ingredients[i][0]}
+                                span #{recipe.ingredients[i][2]}
+                                span #{recipe.ingredients[i][1]}
+                div(class='card card-body')
+                    blockquote(class='card-bodyquote mb-0')
+                        p
+                            if isEdit
+                                a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                                    span(class='mdi mdi-pencil')
+                                span &#8194;
+                            a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                                span(class='remixicon-star-line')
+                        footer(class='blockquote-footer text-muted') #{authorName}&nbsp;
+                            cite(title=recipe.date) #{recipe.date}
+    .row
+        .col-12
+            div(class='card card-body')
+                h5(class='card-title') #{instruction}
+                div(id='bubble-editor')
+                    div(class='ql-editor' data-gramm='false' contenteditable='false')
+                        p !{recipe.instruction}
+
 
 block plugins-js
     //- Vendor js

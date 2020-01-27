@@ -52,9 +52,9 @@ html
                         //-End Search
                                                 
                         //- Language
-                        li(class='dropdown d-block')
+                        li(class='dropdown')
                             a(class='nav-link dropdown-toggle mr-0 waves-effect waves-light' data-toggle='dropdown' href='#' role='button' aria-haspopup='false' aria-expanded='false')
-                                img(src='assets/images/flags/'.concat(currentLang.domain + '.jpg') class='mr-1' height='12')
+                                img(src='assets/images/flags/'.concat(currentLang.domain + '.jpg') class='mr-1 ' height='12')
                                 span(class='align-middle') #{currentLang.name}
                                     i(class='mdi mdi-chevron-down')
                 
@@ -212,7 +212,6 @@ html
         //- ==============================================================
         div(class="wrapper")
             div(class="container-fluid")
-
                 //- start page title
                 div(class="row")
                     div(class="col-12")
