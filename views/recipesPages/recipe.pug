@@ -38,40 +38,41 @@ block plugins-css
 
 block content
     .row
-        .col-12
-            .card-columns
-                .card
-                    img(class='card-img-top img-fluid' src=recipe.img_path alt=title)
-                    .card-body
-                        h5(class='card-title') #{description}
-                        p(class='card-text') #{recipe.description}
-                div(class='card card-body')
-                    h5(class='card-title') #{ingredients}:
-                    dl
-                        - for(let i = 0; i < recipe.ingredients.length; i++)
-                            dd
-                                span #{recipe.ingredients[i][0]}
-                                span #{recipe.ingredients[i][2]}
-                                span #{recipe.ingredients[i][1]}
-                div(class='card card-body')
-                    blockquote(class='card-bodyquote mb-0')
-                        p
-                            if isEdit
-                                a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                                    span(class='mdi mdi-pencil')
-                                span &#8194;
-                            a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                                span(class='remixicon-star-line')
-                        footer(class='blockquote-footer text-muted') #{authorName}&nbsp;
-                            cite(title=recipe.date) #{recipe.date}
-    .row
-        .col-12
+        div(class='col-lg-4 col-xl-4')
+            div(class='card')
+                img(class='card-img-top img-fluid' src=recipe.img_path alt=title)
+                .card-body
+                    h5(class='card-title') #{description}
+                    p(class='card-text') #{recipe.description}
             div(class='card card-body')
-                h5(class='card-title') #{instruction}
+                h5(class='card-title') #{ingredients}:
+                dl
+                    - for(let i = 0; i < recipe.ingredients.length; i++)
+                        dd
+                            span #{recipe.ingredients[i][0]}
+                            span #{recipe.ingredients[i][2]}
+                            span #{recipe.ingredients[i][1]}
+            div(class='card card-body')
+                blockquote(class='card-bodyquote mb-0')
+                    p
+                        if isEdit
+                            a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                                span(class='mdi mdi-pencil')
+                            span &#8194;
+                        a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                            span(class='remixicon-star-line')
+                    footer(class='blockquote-footer text-muted') #{authorName}&nbsp;
+                        cite(title=recipe.date) #{recipe.date}
+
+        div(class='col-lg-8 col-xl-8')
+            div(class='card card-body')
+                h5(class='mb-4')
+                    i(class='remixicon-book-open-fill mr-1')
+                    .
+                        #{instruction}
                 div(id='bubble-editor')
                     div(class='ql-editor' data-gramm='false' contenteditable='false')
                         p !{recipe.instruction}
-
 
 block plugins-js
     //- Vendor js
