@@ -34,8 +34,9 @@ async function newRecipes(request, response, next) {
             ingredients: 'Ingredients',
             recipes: body,
             goTo: 'Go To',
+            isEdit: false
         };
-        response.sendPugFile( 'recipesPages/newRecipes', options);
+        response.sendPugFile( 'recipesPages/recipes', options);
     });
 }
 
@@ -58,9 +59,10 @@ async function myRecipes(request, response, next) {
             ingredients: 'Ingredients',
             recipes: body,
             goTo: 'Go To',
+            isEdit: true
         };
 
-        response.sendPugFile('recipesPages/myRecipes', options);
+        response.sendPugFile('recipesPages/recipes', options);
     });
 }
 
@@ -102,6 +104,7 @@ async function getRecipe(request, response, next) {
                 if (err || body.message) log.err(err);
                 if (options.authorName === body.username)
                     options.isEdit = true;
+                response.myProfile = body;
                 response.sendPugFile('recipesPages/recipe', options)
             });
         });

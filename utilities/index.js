@@ -40,7 +40,7 @@ function initProject(app) {
     app.use(errors);
 
     log.debug('Initializing: set view engine:pug');
-    log.debug('Initializing: use bodyParser, assets, cookieParser, responseCustom, users, recipes');
+    log.debug('Initializing: use bodyParser, assets, cookieParser, responseCustom, users, recipes, errors');
 }
 
 function responseCustom(request, response, next) {
@@ -68,40 +68,52 @@ function responseCustom(request, response, next) {
         options.or = 'or';
         options.sign_up = 'Sign Up';
 
+        if (response.langs && response.currentLang) return sendPugFilePart1(request, response, next, pathFile, options);
+
         translator.getLanguages(langs => {
-            const current_lang = request.cookies['lang'] || 'us';
-            options.langs = langs;
-            options.currentLang = {
+            response.langs = langs;
+            response.currentLang = {
                 domain: request.cookies['lang'] || 'us',
-                name: options.langs[request.cookies['lang'] || 'us']
+                name: response.langs[request.cookies['lang'] || 'us']
             };
 
-            translator.translate(current_lang, options, array => {
-                if (request.cookies.token && !request.url.includes('/login') &&
-                    !request.url.includes('/registration')) {
-                    api.getMyProfile(request.cookies.token, (err, res, body) => {
-                        array.username = body.username;
-                        renderFile(response, __dirname, pathFile, array);
-                    });
-                }
-                else {
-                    options.isProfile = false;
-                    renderFile(response, __dirname, pathFile, array);
-                }
-            });
+            sendPugFilePart1(request, response, next, pathFile, options);
         });
     };
     next();
 }
 
-function renderFile(response, __dirname, pathFile, options) {
+function sendPugFilePart1(request, response, next, pathFile, options) {
+    options.langs = response.langs;
+    options.currentLang = response.currentLang;
+
+    translator.translate(options.currentLang.domain, options, array => {
+        if (request.cookies.token && !request.url.includes('/login') && !request.url.includes('/registration')) {
+            if(response.myProfile) {
+                array.username = response.myProfile.username;
+                renderFile(response, __dirname, pathFile, array, next);
+            }
+            else {
+                api.getMyProfile(request.cookies.token, (err, res, body) => {
+                    array.username = body.username;
+                    renderFile(response, __dirname, pathFile, array, next);
+                });
+            }
+        }
+        else {
+            options.isProfile = false;
+            renderFile(response, __dirname, pathFile, array, next);
+        }
+    });
+}
+
+function renderFile(response, __dirname, pathFile, options, next) {
     pug.renderFile(
         path.join(__dirname, '../views/', pathFile + '.pug'),
         options,
         function (err, data) {
             if (!err) return response.send(data);
-
-            response.sendStatus(500);
-            return log.err(err);
+            log.err(err);
+            return next()
         });
 }
