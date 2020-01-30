@@ -1,11 +1,98 @@
 extends ../layouts/default_layout
 block content
-    h1 #{title}
-    label #{username}
-    br
-    label #{firstName} #{lastName}
-    br
-    label #{email}
-    br
-    a(href='/profile/edit'): button(type='button') #{edit}
-    a(href='/logout'): button(type='button') #{logout}
+    .row
+        div(class='col-lg-4 col-xl-4')
+            div(class='card-box text-center')
+                h4(class='mb-0') #{firstName_person} #{lastName_person}
+                p(class='text-muted') #{username_person}
+                a(href='/logout'): button(type='button' class='btn btn-danger btn-xs waves-effect mb-2 waves-light') #{logout}
+                div(class='text-left mt-3')
+                    h4(class='font-13 text-uppercase') #{about_me}:
+                    //- p(class='text-muted mb-3 font-13')
+                    p(class='text-muted mb-2 font-13')
+                        strong #{email}:
+                        span(class='ml-2') #{email_person}
+        div(class='col-lg-8 col-xl-8')
+            .card-box
+                ul(class='nav nav-pills navtab-bg')
+                    li(class='nav-item')
+                        a(href='#recipes' data-toggle='tab' aria-expanded='true' class='nav-link active ml-0')
+                            i(class='ti ti-receipt mr-1')
+                            .
+                                #{recipes}
+                    li(class='nav-item')
+                        a(href='#settings' data-toggle='tab' aria-expanded='false' class='nav-link')
+                            i(class='mdi mdi-settings-outline mr-1')
+                            .
+                                #{settings}
+                .tab-content
+                    div(class='tab-pane show active' id='recipes')
+                        //-
+                            h5(class='mb-4 text-uppercase')
+                            i(class='mdi mdi-cards-variant mr-1')
+                            .
+                                #{favorites}
+                        h5(class='mb-4 text-uppercase')
+                            i(class='mdi mdi-cards-variant mr-1')
+                            .
+                                #{myRecipes}
+                        .table-responsive
+                            table(class='table table-borderless mb-0')
+                                thead(class='thead-light')
+                                    tr
+                                        th #
+                                        th #{name}
+                                        th #{date_of_publication}
+                                        th #{edit}
+                                tbody
+                                    - for (let i = 1; i <= recipes_person.length; i++)
+                                        tr
+                                            td #{i}
+                                            td #{recipes_person[recipes_person.length - i].name}
+                                            td #{recipes_person[recipes_person.length - i].date}
+                                            td
+                                                a(href='/editRecipe?id='.concat(recipes_person[recipes_person.length - i]._id) class='btn btn-success waves-effect waves-light')
+                                                    span(class='mdi mdi-pencil')
+
+                    div(class='tab-pane' id='settings')
+                        form(action='/updateProfile' class='parsley-form' method='post')
+                            h5(class='mb-3 text-uppercase bg-light p-2')
+                                i(class='mdi mdi-account-circle mr-1')
+                                .
+                                    #{personal_info}
+                            .row
+                                .col-md-6
+                                    .form-group
+                                        label(for='firstname') #{first_name}
+                                        input(type='text' class='form-control' name='firstname' id='firstname' placeholder=enter_first_name)
+                                .col-md-6
+                                    .form-group
+                                        label(for='lastname') #{last_name}
+                                        input(type='text' class='form-control' name='lastname' id='lastname' placeholder=enter_last_name)
+                            .row
+                                .col-md-6
+                                    .form-group
+                                        label(for='useremail') #{email}
+                                        input(type='email' class='form-control' name='email' id='useremail' placeholder=enter_your_email)
+                                .col-md-6
+                                    .form-group
+                                        label(for='userpassword') #{password}
+                                        input(type='password' class='form-control' name='password' id='userpassword' placeholder=enter_your_password)
+                            div(class="text-right")
+                                button(type="submit" class="btn btn-success waves-effect waves-light mt-2")
+                                    i(class="mdi mdi-content-save") #{save}
+
+block plugins-js
+    //- Vendor js || mobile menu
+    script(src='assets/js/vendor.min.js')
+
+    //- Form Validation js (Parsleyjs)
+    script(src='assets/libs/parsleyjs/parsley.min.js')
+
+    //- App js
+    script(src="assets/js/app.min.js")
+
+    script.
+        $(document).ready(function () {
+            $(".parsley-form").parsley()
+        });

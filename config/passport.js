@@ -5,7 +5,7 @@ module.exports = {
 };
 
 function isAuthenticated(request, response, next) {
-    log.info('passport: called isAuthenticated method');
+    log.debug('Passport: called isAuthenticated method');
 
     const cookies = request.cookies;
 

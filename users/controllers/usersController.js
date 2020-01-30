@@ -59,21 +59,49 @@ async function getLogin(request, response, next) {
 }
 
 async function getMyProfile(request, response, next) {
-    log.info('UserController: called getMyProfile method');
+    log.debug('UserController: called getMyProfile method');
 
     const cookies = request.cookies;
 
     api.getMyProfile(cookies.token, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = body.message || err;
-            return response.sendPugFile('error', error_options);
+            log.err(err || body.message);
+            return next();
         }
 
-        response.sendPugFile( 'usersPages/myProfile', {
-            username: body.username,
-            firstName: body.firstName,
-            lastName: body.lastName,
-            email: body.email,
+        response.myProfile = body;
+        const username = body.username;
+        const firstName = body.firstName;
+        const lastName = body.lastName;
+        const email = body.email;
+
+        api.getRecipesByAccountId(body._id, (err, res, body) => {
+            if (err || body.message) {
+                log.err(err || body.message);
+                return next();
+            }
+
+            response.sendPugFile( 'usersPages/myProfile', {
+                title: 'My Profile',
+                about_me: 'About me',
+                email: 'Email',
+                recipes: 'Recipes',
+                name: 'Name',
+                date_of_publication: 'Date of publication',
+                personal_info: 'Personal Info',
+                first_name: 'First Name',
+                enter_first_name: 'Enter first name',
+                last_name: 'Last Name',
+                enter_last_name: 'Enter last name',
+                enter_your_email: 'Enter your email',
+                password: 'Password',
+                enter_your_password: 'Enter your password',
+                username_person: username,
+                firstName_person: firstName,
+                lastName_person: lastName,
+                recipes_person: body,
+                email_person: email,
+            });
         });
     });
 }

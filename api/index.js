@@ -98,7 +98,7 @@ function getRecipesByAccountId(id, fn) {
     log.debug('API: called getRecipesByAccountId method');
 
     const json = {
-        account_id: id
+        id: id
     };
     const options = {
         method: 'GET',
