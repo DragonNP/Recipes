@@ -55,12 +55,13 @@ block content
             div(class='card card-body')
                 blockquote(class='card-bodyquote mb-0')
                     p
-                        if isEdit
-                            a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                                span(class='mdi mdi-pencil')
+                        form(action='/addFavorites' method='post')
+                            if isEdit
+                                a(href='/editRecipe?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
+                                    span(class='mdi mdi-pencil')
                             span &#8194;
-                        a(href='/addFavorites?id='.concat(recipe._id) class='btn btn-success waves-effect waves-light')
-                            span(class='remixicon-star-line')
+                            input(type='hidden', name='id'  value=recipe._id)
+                            button(type='submit' class='btn btn-success waves-effect waves-light remixicon-star-line')
                     footer(class='blockquote-footer text-muted') #{authorName}&nbsp;
                         cite(title=recipe.date) #{recipe.date}
 

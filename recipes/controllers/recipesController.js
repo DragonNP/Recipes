@@ -1,20 +1,14 @@
 const api = require('../../api');
 const log = require('../../logger');
 
-const error_options = {
-    title: 'Error',
-    path1: '/',
-    nameBt1: 'Home',
-    isVisitableTwoBt: false
-};
-
 module.exports = {
     newRecipes,
     myRecipes,
     getRecipe,
     favorites,
     getAddRecipe,
-    postCreateRecipe
+    postCreateRecipe,
+    postAddFavorites
 };
 
 async function newRecipes(request, response, next) {
@@ -22,8 +16,8 @@ async function newRecipes(request, response, next) {
 
     api.getRecipes((err, res, body) => {
         if (err || body.message) {
-            error_options.error = err || body.message;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            log.err(err || body.message);
+            return next();
         }
 
         const options = {
@@ -42,13 +36,12 @@ async function newRecipes(request, response, next) {
 
 async function myRecipes(request, response, next) {
     log.debug('RecipesController: called myRecipes method');
-
     const cookies = request.cookies;
 
     api.getMyRecipes(cookies.token, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = err || body.message;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            log.err(err || body.message);
+            return next();
         }
 
         const options = {
@@ -68,15 +61,14 @@ async function myRecipes(request, response, next) {
 
 async function getRecipe(request, response, next) {
     log.debug('RecipesController: called recipe method');
-
     const query = request.query;
     if (!query.id)
         return response.redirect('/newRecipes');
 
     api.getRecipeById(query.id, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = err || body.message;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            log.err(err || body.message);
+            return next();
         }
 
         const recipe = body;
@@ -95,8 +87,8 @@ async function getRecipe(request, response, next) {
 
         api.getUserById(body.account_id, (err, res, body) => {
             if (err || body.message) {
-                log.err(err);
-                return response.sendPugFile('recipesPages/recipe', options);
+                log.err(err || body.message);
+                return next();
             }
 
             options.authorName = body.username;
@@ -113,13 +105,12 @@ async function getRecipe(request, response, next) {
 
 async function favorites(request, response, next) {
     log.debug('RecipesController: called favourites method');
-
     const cookies = request.cookies;
 
     api.getMyProfile(cookies.token, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = err || body.message;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            log.err(err || body.message);
+            return next();
         }
 
         const options = {
@@ -136,8 +127,9 @@ async function favorites(request, response, next) {
     });
 }
 
-async function getAddRecipe(request, response, next) {
+async function getAddRecipe(request, response) {
     log.debug('RecipesController: called getCreateRecipe method');
+
     response.sendPugFile('recipesPages/addRecipe', {
         title: 'Add Recipe',
         name: 'Name',
@@ -145,13 +137,10 @@ async function getAddRecipe(request, response, next) {
         ingredients: 'Ingredients',
         instruction: 'Instruction',
         image: 'Image',
-        addRecipe: 'Add Recipe',
         home: 'Home',
-
         enter_name_recipe: 'Enter name recipe',
         enter_description: 'Enter description',
         enter_path_image: 'Enter path image',
-
         enter_name_ingredient: 'Enter name ingredient',
         enter_quantity: 'Enter quantity',
         select_the_unit_of_measure: 'Select the unit of measure',
@@ -166,14 +155,30 @@ async function getAddRecipe(request, response, next) {
 }
 
 async function postCreateRecipe(request, response, next) {
+    log.debug('RecipesController: called postCreateRecipe method');
     const body = request.body;
     body.token = request.cookies['token'];
-    log.debug(body);
+
     api.addRecipe(body, (err, res, body) => {
         if (err || body.message) {
-            error_options.error = err || body.message;
-            return response.sendPugFile(__dirname, 'error', error_options);
+            log.err(err || body.message);
+            return next();
         }
         response.redirect('/recipe?id='.concat(body.id));
     });
+}
+
+async function postAddFavorites(request, response, next) {
+    log.debug('RecipesController: called postAddFavorites method');
+    const id = request.body.id;
+    const token = request.cookies.token;
+
+    api.addFavourites(token, id, (err, req, body) => {
+        if (err || body.message) {
+            log.err(err || body.message);
+            return next();
+        }
+
+        response.redirect('/recipe?id='.concat(id));
+    })
 }

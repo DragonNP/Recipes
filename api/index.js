@@ -128,7 +128,7 @@ function addFavourites(token, id, fn) {
 
     const json = {
         token: token,
-        id: id
+        recipe_id: id
     };
     const options = {
         method: 'POST',
