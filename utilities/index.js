@@ -28,7 +28,6 @@ function initProject(app) {
         });
     }
 
-
     app.set('view engine', 'pug');
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use((req, res, next) => {log.info(req.method + ': ' + req.originalUrl); next()});
@@ -65,8 +64,6 @@ function responseCustom(request, response, next) {
         options.favorites = 'Favorites';
         options.addRecipe = 'Add Recipe';
         options.sign_in = 'Sign In';
-        options.or = 'or';
-        options.sign_up = 'Sign Up';
 
         if (response.langs && response.currentLang) return sendPugFilePart1(request, response, next, pathFile, options);
 

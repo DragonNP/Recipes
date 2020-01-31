@@ -61,19 +61,23 @@ block content
                                 .
                                     #{personal_info}
                             .row
-                                .col-md-6
+                                .col-md-4
+                                    .form-group
+                                        label(for='username') #{username_label}
+                                        input(type='text' class='form-control' name='username' id='username' placeholder=enter_username value=username_person)
+                                .col-md-4
                                     .form-group
                                         label(for='firstname') #{first_name}
-                                        input(type='text' class='form-control' name='firstname' id='firstname' placeholder=enter_first_name)
-                                .col-md-6
+                                        input(type='text' class='form-control' name='firstName' id='firstname' placeholder=enter_first_name value=firstName_person)
+                                .col-md-4
                                     .form-group
                                         label(for='lastname') #{last_name}
-                                        input(type='text' class='form-control' name='lastname' id='lastname' placeholder=enter_last_name)
+                                        input(type='text' class='form-control' name='lastName' id='lastname' placeholder=enter_last_name value=lastName_person)
                             .row
                                 .col-md-6
                                     .form-group
                                         label(for='useremail') #{email}
-                                        input(type='email' class='form-control' name='email' id='useremail' placeholder=enter_your_email)
+                                        input(type='email' class='form-control' name='email' id='useremail' placeholder=enter_your_email value=email_person)
                                 .col-md-6
                                     .form-group
                                         label(for='userpassword') #{password}
